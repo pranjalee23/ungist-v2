@@ -69,6 +69,15 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    subjects: Subject;
+    categories: Category;
+    questions: Question;
+    students: Student;
+    tests: Test;
+    'test-attempts': TestAttempt;
+    authors: Author;
+    blogs: Blog;
+    leads: Lead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,13 +87,22 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    questions: QuestionsSelect<false> | QuestionsSelect<true>;
+    students: StudentsSelect<false> | StudentsSelect<true>;
+    tests: TestsSelect<false> | TestsSelect<true>;
+    'test-attempts': TestAttemptsSelect<false> | TestAttemptsSelect<true>;
+    authors: AuthorsSelect<false> | AuthorsSelect<true>;
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   fallbackLocale: null;
   globals: {};
@@ -122,7 +140,12 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
+  name: string;
+  role: 'super_admin' | 'admin' | 'teacher' | 'content_manager' | 'operations_manager';
+  phone: string;
+  active?: boolean | null;
+  lastLoginAt?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +170,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -163,10 +186,285 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: number;
+  name: string;
+  /**
+   * Automatically generated from Subject Name during creation and cannot be changed later.
+   */
+  slug?: string | null;
+  /**
+   * Automatically generated from Subject Name. Used in Question Codes.
+   */
+  code?: string | null;
+  description?: string | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  /**
+   * Automatically generated from Category Name during creation and cannot be changed later.
+   */
+  slug?: string | null;
+  subject: number | Subject;
+  description?: string | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questions".
+ */
+export interface Question {
+  id: number;
+  questionCode?: string | null;
+  subject: number | Subject;
+  category: number | Category;
+  year: number;
+  passage?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  question: string;
+  questionImage?: (number | null) | Media;
+  tags?: string[] | null;
+  difficulty: 'easy' | 'medium' | 'hard';
+  source: 'pyq' | 'mock' | 'diagnostic' | 'practice';
+  marks?: number | null;
+  negativeMarks?: number | null;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
+  correctAnswer: 'A' | 'B' | 'C' | 'D';
+  explanation?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  active?: boolean | null;
+  skillsTested?:
+    | (
+        | 'Percentages'
+        | 'Ratio'
+        | 'Profit & Loss'
+        | 'Time & Work'
+        | 'Time & Distance'
+        | 'Data Interpretation'
+        | 'Logical Reasoning'
+        | 'Reading Comprehension'
+      )[]
+    | null;
+  cognitiveLevel?: ('basic' | 'intermediate' | 'advanced') | null;
+  estimatedTimeSeconds?: number | null;
+  isAIGenerated?: boolean | null;
+  generatedBy?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "students".
+ */
+export interface Student {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  score?: number | null;
+  rank?: number | null;
+  percentile?: number | null;
+  recommendedProgram?: string | null;
+  active?: boolean | null;
+  lastLogin?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tests".
+ */
+export interface Test {
+  id: number;
+  title: string;
+  /**
+   * Automatically generated from Test Title during creation and cannot be changed later.
+   */
+  slug?: string | null;
+  type: 'diagnostic' | 'generated' | 'mock';
+  description?: string | null;
+  durationMinutes?: number | null;
+  questions?: (number | Question)[] | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test-attempts".
+ */
+export interface TestAttempt {
+  id: number;
+  student: number | Student;
+  test: number | Test;
+  startedAt: string;
+  completedAt?: string | null;
+  score?: number | null;
+  percentage?: number | null;
+  percentile?: number | null;
+  rank?: number | null;
+  correctAnswers?: number | null;
+  wrongAnswers?: number | null;
+  unattemptedAnswers?: number | null;
+  timeTakenSeconds?: number | null;
+  responses?:
+    | {
+        question: number | Question;
+        selectedAnswer?: ('A' | 'B' | 'C' | 'D') | null;
+        correctAnswer?: ('A' | 'B' | 'C' | 'D') | null;
+        isCorrect?: boolean | null;
+        timeTakenSeconds?: number | null;
+        notes?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors".
+ */
+export interface Author {
+  id: number;
+  name: string;
+  /**
+   * Automatically generated from Author Name during creation and cannot be changed later.
+   */
+  slug?: string | null;
+  designation?: string | null;
+  photo?: (number | null) | Media;
+  bio?: string | null;
+  email: string;
+  website?: string | null;
+  linkedin?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  youtube?: string | null;
+  telegram?: string | null;
+  whatsapp?: string | null;
+  active?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: number;
+  title: string;
+  /**
+   * Automatically generated from Blog Title during creation and cannot be changed later.
+   */
+  slug?: string | null;
+  excerpt: string;
+  coverImage?: (number | null) | Media;
+  author: number | Author;
+  /**
+   * Press Enter after each category (e.g. CSAT, Prelims, Strategy).
+   */
+  categories: string[];
+  /**
+   * Press Enter after each tag.
+   */
+  tags?: string[] | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  featured?: boolean | null;
+  status: 'draft' | 'published' | 'unpublished';
+  publishedAt?: string | null;
+  readingTime?: number | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  canonicalUrl?: string | null;
+  isAIGenerated?: boolean | null;
+  generatedBy?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  countryCode?: string | null;
+  source?: ('website' | 'blog' | 'diagnostic' | 'whatsapp' | 'instagram' | 'youtube' | 'referral' | 'walkin') | null;
+  status?: ('new' | 'contacted' | 'interested' | 'demo_class_taken' | 'converted' | 'lost') | null;
+  productInterest?: ('csat-foundation' | 'test-series' | 'book') | null;
+  notes?: string | null;
+  newsletterOptIn?: boolean | null;
+  leadCreatedAt?: string | null;
+  assignedTo?: (number | null) | User;
+  student?: (number | null) | Student;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +481,56 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'subjects';
+        value: number | Subject;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'questions';
+        value: number | Question;
+      } | null)
+    | ({
+        relationTo: 'students';
+        value: number | Student;
+      } | null)
+    | ({
+        relationTo: 'tests';
+        value: number | Test;
+      } | null)
+    | ({
+        relationTo: 'test-attempts';
+        value: number | TestAttempt;
+      } | null)
+    | ({
+        relationTo: 'authors';
+        value: number | Author;
+      } | null)
+    | ({
+        relationTo: 'blogs';
+        value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +540,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +563,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -240,6 +574,11 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  phone?: T;
+  active?: T;
+  lastLoginAt?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -274,6 +613,195 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects_select".
+ */
+export interface SubjectsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  code?: T;
+  description?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  subject?: T;
+  description?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questions_select".
+ */
+export interface QuestionsSelect<T extends boolean = true> {
+  questionCode?: T;
+  subject?: T;
+  category?: T;
+  year?: T;
+  passage?: T;
+  question?: T;
+  questionImage?: T;
+  tags?: T;
+  difficulty?: T;
+  source?: T;
+  marks?: T;
+  negativeMarks?: T;
+  optionA?: T;
+  optionB?: T;
+  optionC?: T;
+  optionD?: T;
+  correctAnswer?: T;
+  explanation?: T;
+  active?: T;
+  skillsTested?: T;
+  cognitiveLevel?: T;
+  estimatedTimeSeconds?: T;
+  isAIGenerated?: T;
+  generatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "students_select".
+ */
+export interface StudentsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  score?: T;
+  rank?: T;
+  percentile?: T;
+  recommendedProgram?: T;
+  active?: T;
+  lastLogin?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tests_select".
+ */
+export interface TestsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  type?: T;
+  description?: T;
+  durationMinutes?: T;
+  questions?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test-attempts_select".
+ */
+export interface TestAttemptsSelect<T extends boolean = true> {
+  student?: T;
+  test?: T;
+  startedAt?: T;
+  completedAt?: T;
+  score?: T;
+  percentage?: T;
+  percentile?: T;
+  rank?: T;
+  correctAnswers?: T;
+  wrongAnswers?: T;
+  unattemptedAnswers?: T;
+  timeTakenSeconds?: T;
+  responses?:
+    | T
+    | {
+        question?: T;
+        selectedAnswer?: T;
+        correctAnswer?: T;
+        isCorrect?: T;
+        timeTakenSeconds?: T;
+        notes?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors_select".
+ */
+export interface AuthorsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  designation?: T;
+  photo?: T;
+  bio?: T;
+  email?: T;
+  website?: T;
+  linkedin?: T;
+  twitter?: T;
+  instagram?: T;
+  facebook?: T;
+  youtube?: T;
+  telegram?: T;
+  whatsapp?: T;
+  active?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  coverImage?: T;
+  author?: T;
+  categories?: T;
+  tags?: T;
+  content?: T;
+  featured?: T;
+  status?: T;
+  publishedAt?: T;
+  readingTime?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  canonicalUrl?: T;
+  isAIGenerated?: T;
+  generatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  countryCode?: T;
+  source?: T;
+  status?: T;
+  productInterest?: T;
+  notes?: T;
+  newsletterOptIn?: T;
+  leadCreatedAt?: T;
+  assignedTo?: T;
+  student?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

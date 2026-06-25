@@ -37,5 +37,33 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": "explicit"
     }
+  },
+  "workbench.colorCustomizations": {
+    "[Abyss]": {
+      "editor.foreground": "#638fe7"
+    },
+    "[CodeSandbox Legacy]": {},
+    "[Jetbrains Fleet]": {
+      "titleBar.activeBackground": "#000",
+      "titleBar.activeForeground": "#fff",
+      "activityBar.background": "#000",
+      "activityBar.activeBackground": "#000",
+      "sideBar.background": "#000",
+      "editor.background": "#000",
+      "tab.activeBorder": "#000",
+      "tab.inactiveBackground": "#111",
+      "tab.inactiveForeground": "#fff"
+    },
+    "activityBar.background": "#51114D",
+    "titleBar.activeBackground": "#71186C",
+    "titleBar.activeForeground": "#FEFCFE",
+    "titleBar.inactiveBackground": "#51114D",
+    "titleBar.inactiveForeground": "#FEFCFE",
+    "statusBar.background": "#51114D",
+    "statusBar.foreground": "#FEFCFE",
+    "statusBar.debuggingBackground": "#51114D",
+    "statusBar.debuggingForeground": "#FEFCFE",
+    "statusBar.noFolderBackground": "#51114D",
+    "statusBar.noFolderForeground": "#FEFCFE"
   }
 }
