@@ -78,6 +78,7 @@ export interface Config {
     authors: Author;
     blogs: Blog;
     leads: Lead;
+    imports: Import;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
+    imports: ImportsSelect<false> | ImportsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -171,7 +173,27 @@ export interface User {
  */
 export interface Media {
   id: number;
-  alt: string;
+  alt?: string | null;
+  caption?: string | null;
+  description?: string | null;
+  folder?:
+    | (
+        | 'blog-images'
+        | 'faculty'
+        | 'question-pdfs'
+        | 'question-csv'
+        | 'question-excel'
+        | 'student-imports'
+        | 'marketing'
+        | 'documents'
+        | 'logos'
+        | 'misc'
+      )
+    | null;
+  tags?: string[] | null;
+  credit?: string | null;
+  isPublic?: boolean | null;
+  uploadedBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -461,6 +483,41 @@ export interface Lead {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "imports".
+ */
+export interface Import {
+  id: number;
+  name: string;
+  type: 'questions' | 'subjects' | 'categories' | 'blogs' | 'authors' | 'students' | 'leads';
+  file: number | Media;
+  mode?: ('strict' | 'best_effort') | null;
+  status?: ('pending' | 'validating' | 'preview_ready' | 'needs_review' | 'importing' | 'completed' | 'failed') | null;
+  preview?: {
+    validRows?: number | null;
+    errorRows?: number | null;
+    duplicateRows?: number | null;
+    unknownSubjects?: number | null;
+    unknownCategories?: number | null;
+  };
+  totalRows?: number | null;
+  successfulRows?: number | null;
+  failedRows?: number | null;
+  errors?:
+    | {
+        row?: number | null;
+        field?: string | null;
+        message?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  uploadedBy?: (number | null) | User;
+  startedAt?: string | null;
+  completedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -526,6 +583,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leads';
         value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'imports';
+        value: number | Import;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -602,6 +663,13 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
+  description?: T;
+  folder?: T;
+  tags?: T;
+  credit?: T;
+  isPublic?: T;
+  uploadedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -800,6 +868,42 @@ export interface LeadsSelect<T extends boolean = true> {
   leadCreatedAt?: T;
   assignedTo?: T;
   student?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "imports_select".
+ */
+export interface ImportsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  file?: T;
+  mode?: T;
+  status?: T;
+  preview?:
+    | T
+    | {
+        validRows?: T;
+        errorRows?: T;
+        duplicateRows?: T;
+        unknownSubjects?: T;
+        unknownCategories?: T;
+      };
+  totalRows?: T;
+  successfulRows?: T;
+  failedRows?: T;
+  errors?:
+    | T
+    | {
+        row?: T;
+        field?: T;
+        message?: T;
+        id?: T;
+      };
+  uploadedBy?: T;
+  startedAt?: T;
+  completedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
