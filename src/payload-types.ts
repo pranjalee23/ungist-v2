@@ -488,10 +488,24 @@ export interface Lead {
 export interface Import {
   id: number;
   name: string;
-  type: 'questions' | 'blogs' | 'students' | 'authors' | 'leads';
-  version?: '1.0' | null;
-  file: number | Media;
-  status?: ('pending' | 'validating' | 'importing' | 'completed' | 'failed') | null;
+  type: 'questions' | 'subjects' | 'categories' | 'blogs' | 'authors' | 'students' | 'leads';
+  /**
+   * Upload a CSV, Excel, JSON, or (for Questions) PDF file. Provide this OR a Source URL.
+   */
+  file?: (number | null) | Media;
+  /**
+   * Optional. A published Google Sheets link (or public CSV URL) to import instead of a file.
+   */
+  sourceUrl?: string | null;
+  mode?: ('strict' | 'best_effort') | null;
+  status?: ('pending' | 'validating' | 'preview_ready' | 'needs_review' | 'importing' | 'completed' | 'failed') | null;
+  preview?: {
+    validRows?: number | null;
+    errorRows?: number | null;
+    duplicateRows?: number | null;
+    unknownSubjects?: number | null;
+    unknownCategories?: number | null;
+  };
   totalRows?: number | null;
   successfulRows?: number | null;
   failedRows?: number | null;
@@ -871,9 +885,19 @@ export interface LeadsSelect<T extends boolean = true> {
 export interface ImportsSelect<T extends boolean = true> {
   name?: T;
   type?: T;
-  version?: T;
   file?: T;
+  sourceUrl?: T;
+  mode?: T;
   status?: T;
+  preview?:
+    | T
+    | {
+        validRows?: T;
+        errorRows?: T;
+        duplicateRows?: T;
+        unknownSubjects?: T;
+        unknownCategories?: T;
+      };
   totalRows?: T;
   successfulRows?: T;
   failedRows?: T;

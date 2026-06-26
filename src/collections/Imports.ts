@@ -1,7 +1,29 @@
 import type { CollectionConfig } from 'payload'
+import { isContentManager } from '@/lib/access/isContentManager'
+import { importEndpoints } from '@/lib/imports/endpoints'
 
 export const Imports: CollectionConfig = {
   slug: 'imports',
+
+  access: {
+    create: isContentManager,
+    read: isContentManager,
+    update: isContentManager,
+    delete: isContentManager,
+  },
+
+  endpoints: importEndpoints,
+
+  hooks: {
+    beforeChange: [
+      ({ data, req, operation }) => {
+        if (operation === 'create' && !data.uploadedBy) {
+          data.uploadedBy = req.user?.id
+        }
+        return data
+      },
+    ],
+  },
 
   admin: {
     useAsTitle: 'name',
@@ -18,7 +40,7 @@ export const Imports: CollectionConfig = {
 
     {
       name: 'type',
-      label: 'Import Type',
+      label: 'Entity / Import Type',
       type: 'select',
       required: true,
       options: [
@@ -27,16 +49,24 @@ export const Imports: CollectionConfig = {
           value: 'questions',
         },
         {
+          label: 'Subjects',
+          value: 'subjects',
+        },
+        {
+          label: 'Categories',
+          value: 'categories',
+        },
+        {
           label: 'Blogs',
           value: 'blogs',
         },
         {
-          label: 'Students',
-          value: 'students',
-        },
-        {
           label: 'Authors',
           value: 'authors',
+        },
+        {
+          label: 'Students',
+          value: 'students',
         },
         {
           label: 'Leads',
@@ -66,7 +96,34 @@ export const Imports: CollectionConfig = {
       label: 'Import File',
       type: 'relationship',
       relationTo: 'media',
-      required: true,
+      admin: {
+        description: 'Upload a CSV, Excel, JSON, or (for Questions) PDF file. Provide this OR a Source URL.',
+      },
+      validate: (value: unknown, { data }: { data?: { sourceUrl?: string } }) =>
+        value || data?.sourceUrl ? true : 'Provide an import file or a Source URL.',
+    },
+
+    {
+      name: 'sourceUrl',
+      label: 'Source URL',
+      type: 'text',
+      admin: {
+        description: 'Optional. A published Google Sheets link (or public CSV URL) to import instead of a file.',
+      },
+    },
+
+    {
+      name: 'mode',
+      label: 'Import Mode',
+      type: 'select',
+      defaultValue: 'strict',
+      options: [
+        { label: 'Strict (any error aborts the whole import)', value: 'strict' },
+        { label: 'Best effort (skip bad rows, import the rest)', value: 'best_effort' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
     },
 
     {
@@ -81,6 +138,14 @@ export const Imports: CollectionConfig = {
         {
           label: 'Validating',
           value: 'validating',
+        },
+        {
+          label: 'Preview Ready',
+          value: 'preview_ready',
+        },
+        {
+          label: 'Needs Review',
+          value: 'needs_review',
         },
         {
           label: 'Importing',
@@ -99,6 +164,33 @@ export const Imports: CollectionConfig = {
         position: 'sidebar',
         readOnly: true,
       },
+    },
+
+    {
+      name: 'actions',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        components: {
+          Field: '@/app/(payload)/admin/components/ImportActions',
+        },
+      },
+    },
+
+    {
+      name: 'preview',
+      label: 'Preview Analysis',
+      type: 'group',
+      admin: {
+        readOnly: true,
+      },
+      fields: [
+        { name: 'validRows', type: 'number', defaultValue: 0 },
+        { name: 'errorRows', type: 'number', defaultValue: 0 },
+        { name: 'duplicateRows', type: 'number', defaultValue: 0 },
+        { name: 'unknownSubjects', type: 'number', defaultValue: 0 },
+        { name: 'unknownCategories', type: 'number', defaultValue: 0 },
+      ],
     },
 
     {

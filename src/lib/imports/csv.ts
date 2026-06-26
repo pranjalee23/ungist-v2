@@ -1,19 +1,25 @@
-import { parse } from 'csv-parse/sync'
+import Papa from 'papaparse'
+import type { SourceAdapter } from './types'
 
-import type { ImportRow, ParsedImportFile } from './types'
+/**
+ * Parse a CSV buffer into an array of row objects keyed by header.
+ * Empty rows are skipped; all values come back as strings.
+ */
+export const parseCSV = async (file: Buffer): Promise<Record<string, string>[]> => {
+  const { data, errors } = Papa.parse<Record<string, string>>(file.toString('utf8'), {
+    header: true,
+    skipEmptyLines: 'greedy',
+    transformHeader: (h) => h.trim(),
+  })
 
-export async function parseCSV(buffer: Buffer): Promise<ParsedImportFile> {
-  const rows = parse(buffer, {
-    columns: true,
-    skip_empty_lines: true,
-    trim: true,
-    bom: true,
-  }) as ImportRow[]
-
-  const headers = rows.length > 0 ? Object.keys(rows[0]) : []
-
-  return {
-    headers,
-    rows,
+  if (errors.length) {
+    throw new Error(`CSV parse error (row ${errors[0].row}): ${errors[0].message}`)
   }
+
+  return data
+}
+
+export const csvAdapter: SourceAdapter = {
+  extensions: ['.csv'],
+  extract: parseCSV,
 }
