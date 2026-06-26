@@ -7,7 +7,7 @@ export interface ImportError {
   message: string
 }
 
-export const required = (value: unknown, row: number, field: string, errors: ImportError[]) => {
+export function required(value: unknown, row: number, field: string, errors: ImportError[]) {
   if (value === undefined || value === null || value === '') {
     errors.push({
       row,
