@@ -27,13 +27,14 @@
     "exceljs": "^4.4.0",
     "graphql": "^16.8.1",
     "libphonenumber-js": "^1.13.7",
-    "papaparse": "^5.4.1",
     "next": "16.2.6",
+    "papaparse": "^5.4.1",
     "payload": "3.85.1",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-phone-number-input": "^3.4.17",
-    "sharp": "0.34.2"
+    "sharp": "0.34.2",
+    "unpdf": "^1.6.2"
   },
   "devDependencies": {
     "@playwright/test": "1.58.2",

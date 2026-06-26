@@ -489,7 +489,14 @@ export interface Import {
   id: number;
   name: string;
   type: 'questions' | 'subjects' | 'categories' | 'blogs' | 'authors' | 'students' | 'leads';
-  file: number | Media;
+  /**
+   * Upload a CSV, Excel, JSON, or (for Questions) PDF file. Provide this OR a Source URL.
+   */
+  file?: (number | null) | Media;
+  /**
+   * Optional. A published Google Sheets link (or public CSV URL) to import instead of a file.
+   */
+  sourceUrl?: string | null;
   mode?: ('strict' | 'best_effort') | null;
   status?: ('pending' | 'validating' | 'preview_ready' | 'needs_review' | 'importing' | 'completed' | 'failed') | null;
   preview?: {
@@ -879,6 +886,7 @@ export interface ImportsSelect<T extends boolean = true> {
   name?: T;
   type?: T;
   file?: T;
+  sourceUrl?: T;
   mode?: T;
   status?: T;
   preview?:

@@ -49,7 +49,7 @@ export const questionsImporter: Importer<QuestionImportRow, ResolvedQuestion> = 
   type: 'questions',
   label: 'Questions',
   description: 'Import UPSC questions from CSV or Excel. Subject and Category must already exist.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json', '.pdf'],
   columns: [
     { header: 'Subject', required: true, description: 'Existing subject name', example: 'CSAT' },
     { header: 'Category', required: true, description: 'Existing category under the subject', example: 'Reading Comprehension' },

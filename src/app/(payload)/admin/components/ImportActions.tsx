@@ -59,7 +59,8 @@ export const ImportActions: React.FC = () => {
       </Button>
       {message && <p style={{ fontSize: 13, margin: 0 }}>{message}</p>}
       <p style={{ fontSize: 12, opacity: 0.6, margin: 0 }}>
-        Validate first to preview row counts and errors. Run Import creates the records.
+        Accepts CSV, Excel, or JSON (and PDF for Questions), or a Google Sheets / CSV URL.
+        Validate first to preview row counts and errors; Run Import creates the records.
       </p>
     </div>
   )

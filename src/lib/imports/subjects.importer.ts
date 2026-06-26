@@ -18,7 +18,7 @@ export const subjectsImporter: Importer<SubjectRow, ResolvedSubject> = {
   type: 'subjects',
   label: 'Subjects',
   description: 'Import subjects in bulk. Code and slug are generated automatically.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Name', required: true, example: 'CSAT' },
     { header: 'Description', required: false },

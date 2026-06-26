@@ -1,4 +1,5 @@
 import Papa from 'papaparse'
+import type { SourceAdapter } from './types'
 
 /**
  * Parse a CSV buffer into an array of row objects keyed by header.
@@ -16,4 +17,9 @@ export const parseCSV = async (file: Buffer): Promise<Record<string, string>[]> 
   }
 
   return data
+}
+
+export const csvAdapter: SourceAdapter = {
+  extensions: ['.csv'],
+  extract: parseCSV,
 }

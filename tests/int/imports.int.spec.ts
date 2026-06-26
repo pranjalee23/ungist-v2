@@ -6,6 +6,9 @@ import { parseFile, normalizeHeaders } from '@/lib/imports/parser'
 import { questionsImporter } from '@/lib/imports/questions.importer'
 import { validateImport, runImport } from '@/lib/imports/engine'
 import { buildTemplateCsv } from '@/lib/imports/templates'
+import { parseJSON } from '@/lib/imports/json'
+import { parseQuestionBlocks } from '@/lib/imports/pdf'
+import { toGoogleSheetCsvUrl } from '@/lib/imports/sourceUrl'
 import type { ImportContext } from '@/lib/imports/types'
 
 // ---- Fixtures --------------------------------------------------------------
@@ -92,7 +95,7 @@ describe('parseFile', () => {
   })
 
   it('rejects unsupported extensions', async () => {
-    await expect(parseFile(Buffer.from(''), 'pdf')).rejects.toThrow(/Unsupported/)
+    await expect(parseFile(Buffer.from(''), 'docx')).rejects.toThrow(/Unsupported/)
   })
 })
 
@@ -272,5 +275,111 @@ describe('buildTemplateCsv', () => {
 
   it('throws for an unregistered type', () => {
     expect(() => buildTemplateCsv('faculty' as never)).toThrow()
+  })
+})
+
+// ---- source adapters: JSON, PDF, Google Sheets ----------------------------
+
+const runImportFile = async (type: string, buffer: Buffer, filename: string) => {
+  const doc: Record<string, unknown> = {
+    id: 1,
+    type,
+    file: { id: 9, filename, url: `/api/media/file/${filename}` },
+    mode: 'best_effort',
+  }
+  const { payload, created } = makePayload(doc)
+  await runImport(1, payload as never, buffer, filename)
+  return { doc, created }
+}
+
+describe('JSON adapter', () => {
+  it('parses a top-level array of objects', async () => {
+    const rows = await parseJSON(Buffer.from(JSON.stringify([{ Name: 'X' }, { Name: 'Y' }])))
+    expect(rows.map((r) => r.Name)).toEqual(['X', 'Y'])
+  })
+
+  it('parses a { rows: [...] } envelope', async () => {
+    const rows = await parseJSON(Buffer.from(JSON.stringify({ rows: [{ Name: 'Z' }] })))
+    expect(rows).toHaveLength(1)
+  })
+
+  it('rejects malformed JSON', async () => {
+    await expect(parseJSON(Buffer.from('{not json'))).rejects.toThrow()
+  })
+
+  it('imports a question through the engine via JSON', async () => {
+    const json = JSON.stringify([
+      {
+        Subject: 'Mathematics',
+        Category: 'Arithmetic',
+        Year: 2022,
+        Question: 'What is 2+2?',
+        OptionA: '3',
+        OptionB: '4',
+        OptionC: '5',
+        OptionD: '6',
+        CorrectAnswer: 'B',
+      },
+    ])
+    const { created } = await runImportFile('questions', Buffer.from(json), 'q.json')
+    expect(created).toHaveLength(1)
+    expect(created[0].collection).toBe('questions')
+  })
+})
+
+describe('PDF question block parser', () => {
+  const TEXT = [
+    'Subject: CSAT',
+    'Category: Reading Comprehension',
+    'Year: 2022',
+    'Q: What is the capital of France?',
+    'A) Paris',
+    'B) London',
+    'C) Berlin',
+    'D) Rome',
+    'Answer: A',
+    '',
+    'Subject: CSAT',
+    'Q: Second question?',
+    'Answer: B',
+  ].join('\n')
+
+  it('extracts labeled blocks into question rows', () => {
+    const rows = parseQuestionBlocks(TEXT)
+    expect(rows).toHaveLength(2)
+    expect(rows[0]).toMatchObject({
+      Subject: 'CSAT',
+      Question: 'What is the capital of France?',
+      OptionA: 'Paris',
+      CorrectAnswer: 'A',
+    })
+  })
+
+  it('skips blocks with no recognizable fields', () => {
+    expect(parseQuestionBlocks('just some prose\n\nmore prose')).toHaveLength(0)
+  })
+})
+
+describe('Google Sheets source URL', () => {
+  it('rewrites a sheet link to the CSV export URL', () => {
+    const url = toGoogleSheetCsvUrl('https://docs.google.com/spreadsheets/d/ABC123/edit#gid=42')
+    expect(url).toBe('https://docs.google.com/spreadsheets/d/ABC123/export?format=csv&gid=42')
+  })
+
+  it('leaves a non-sheets URL unchanged', () => {
+    expect(toGoogleSheetCsvUrl('https://example.com/data.csv')).toBe('https://example.com/data.csv')
+  })
+})
+
+describe('extension gating', () => {
+  it('parseFile rejects an unknown extension', async () => {
+    await expect(parseFile(Buffer.from(''), 'docx')).rejects.toThrow(/Unsupported/)
+  })
+
+  it('rejects a .pdf upload for a non-Questions importer', async () => {
+    const { doc, created } = await runImportFile('students', Buffer.from('x'), 'list.pdf')
+    expect(created).toHaveLength(0)
+    expect(doc.status).toBe('failed')
+    expect((doc.errors as { message: string }[])[0].message).toMatch(/Unsupported file type/)
   })
 })

@@ -29,7 +29,7 @@ export const studentsImporter: Importer<StudentRow, ResolvedStudent> = {
   type: 'students',
   label: 'Students',
   description: 'Import student records from CSV or Excel.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Name', required: true, example: 'Aarav Sharma' },
     { header: 'Email', required: true, example: 'aarav@example.com' },

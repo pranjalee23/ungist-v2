@@ -1,4 +1,5 @@
 import ExcelJS from 'exceljs'
+import type { SourceAdapter } from './types'
 
 /**
  * Parse the first worksheet of an XLSX buffer into row objects.
@@ -37,6 +38,11 @@ export const parseXLSX = async (file: Buffer): Promise<Record<string, unknown>[]
   }
 
   return rows
+}
+
+export const xlsxAdapter: SourceAdapter = {
+  extensions: ['.xlsx', '.xls'],
+  extract: parseXLSX,
 }
 
 /** Reduce an exceljs cell value to a primitive string/number. */

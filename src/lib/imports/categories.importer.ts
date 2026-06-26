@@ -20,7 +20,7 @@ export const categoriesImporter: Importer<CategoryRow, ResolvedCategory> = {
   type: 'categories',
   label: 'Categories',
   description: 'Import categories. Each row must reference an existing subject by name.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Name', required: true, example: 'Reading Comprehension' },
     { header: 'Subject', required: true, description: 'Existing subject name', example: 'CSAT' },

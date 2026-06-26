@@ -10,10 +10,13 @@ export * from './resolve'
 export * from './lexical'
 export * from './coerce'
 
-// Parsing
+// Parsing / source adapters
 export * from './csv'
 export * from './xlsx'
+export * from './json'
+export * from './pdf'
 export * from './parser'
+export * from './sourceUrl'
 export * from './validator'
 
 // Importers (one module per entity)

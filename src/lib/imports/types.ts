@@ -12,6 +12,19 @@ export type ImportType =
 
 export type ImportMode = 'strict' | 'best_effort'
 
+/** A parsed row, keyed by its original column headers. */
+export type RawRow = Record<string, unknown>
+
+/**
+ * Turns raw file bytes into rows. CSV, XLSX, JSON, and (later) AI/OCR are all
+ * just adapters — the engine and importers downstream never change. An adapter
+ * is selected by the uploaded file's extension.
+ */
+export interface SourceAdapter {
+  extensions: string[]
+  extract(buffer: Buffer): Promise<RawRow[]>
+}
+
 /**
  * Describes one expected column. The single source of truth for both the
  * Download Template generator and admin tooltips, so template headers can never

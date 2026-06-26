@@ -42,7 +42,7 @@ export const leadsImporter: Importer<LeadRow, ResolvedLead> = {
   type: 'leads',
   label: 'Leads',
   description: 'Import marketing leads from CSV or Excel.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Name', required: true, example: 'Priya Verma' },
     { header: 'Email', required: true, example: 'priya@example.com' },

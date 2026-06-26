@@ -28,7 +28,7 @@ export const authorsImporter: Importer<AuthorRow, ResolvedAuthor> = {
   type: 'authors',
   label: 'Authors',
   description: 'Import blog authors. Slug is generated automatically from the name.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Name', required: true, example: 'Jane Doe' },
     { header: 'Email', required: true, example: 'jane@example.com' },

@@ -1,6 +1,7 @@
 import type { Endpoint, PayloadRequest } from 'payload'
 import { isContentManager } from '@/lib/access/isContentManager'
 import { getMediaBuffer } from './mediaBuffer'
+import { fetchSourceBuffer } from './sourceUrl'
 import { runImport, validateImport } from './engine'
 import { buildTemplateCsv } from './templates'
 import type { ImportType } from './types'
@@ -21,13 +22,20 @@ const makeHandler = (action: 'validate' | 'run'): Endpoint['handler'] => {
     const doc = await req.payload.findByID({ collection: 'imports', id, depth: 1 })
 
     const media = typeof doc.file === 'object' ? doc.file : null
-    if (!media) {
-      return Response.json({ error: 'No file is attached to this import.' }, { status: 400 })
+    const sourceUrl = typeof doc.sourceUrl === 'string' ? doc.sourceUrl.trim() : ''
+    if (!media && !sourceUrl) {
+      return Response.json(
+        { error: 'No import file or source URL provided.' },
+        { status: 400 },
+      )
     }
 
     try {
-      const buffer = await getMediaBuffer(req.payload, media)
-      const filename = media.filename || ''
+      // Source URL takes precedence; otherwise read the uploaded media file.
+      const { buffer, filename } = sourceUrl
+        ? await fetchSourceBuffer(sourceUrl)
+        : { buffer: await getMediaBuffer(req.payload, media!), filename: media!.filename || '' }
+
       if (action === 'validate') {
         await validateImport(id, req.payload, buffer, filename)
       } else {

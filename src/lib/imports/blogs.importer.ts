@@ -31,7 +31,7 @@ export const blogsImporter: Importer<BlogRow, ResolvedBlog> = {
   type: 'blogs',
   label: 'Blogs',
   description: 'Import blog posts. Author must already exist; content becomes rich text.',
-  supportedExtensions: ['.csv', '.xlsx'],
+  supportedExtensions: ['.csv', '.xlsx', '.json'],
   columns: [
     { header: 'Title', required: true, example: 'How to crack CSAT' },
     { header: 'Excerpt', required: true, example: 'A short summary of the article.' },

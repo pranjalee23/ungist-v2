@@ -80,7 +80,20 @@ export const Imports: CollectionConfig = {
       label: 'Import File',
       type: 'relationship',
       relationTo: 'media',
-      required: true,
+      admin: {
+        description: 'Upload a CSV, Excel, JSON, or (for Questions) PDF file. Provide this OR a Source URL.',
+      },
+      validate: (value: unknown, { data }: { data?: { sourceUrl?: string } }) =>
+        value || data?.sourceUrl ? true : 'Provide an import file or a Source URL.',
+    },
+
+    {
+      name: 'sourceUrl',
+      label: 'Source URL',
+      type: 'text',
+      admin: {
+        description: 'Optional. A published Google Sheets link (or public CSV URL) to import instead of a file.',
+      },
     },
 
     {
