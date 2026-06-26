@@ -169,3 +169,14 @@ Never read, summarize, print, or modify:
 - credentials
 
 Unless explicitly instructed by the user.
+
+Never run commands that modify the database, create records, execute imports, or perform destructive operations unless I explicitly ask.
+
+You may:
+- Read files
+- Analyze code
+- Run type checking
+- Run tests
+- Suggest commands
+
+Before running any command that writes data, ask for my approval.
