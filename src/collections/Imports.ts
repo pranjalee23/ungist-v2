@@ -46,6 +46,22 @@ export const Imports: CollectionConfig = {
     },
 
     {
+      name: 'version',
+      type: 'select',
+      defaultValue: '1.0',
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+      options: [
+        {
+          label: '1.0',
+          value: '1.0',
+        },
+      ],
+    },
+
+    {
       name: 'file',
       label: 'Import File',
       type: 'relationship',

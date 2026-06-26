@@ -1,3 +1,19 @@
-export const parseCSV = async (file: Buffer): Promise<Record<string, string>[]> => {
-  throw new Error('CSV parser not implemented yet.')
+import { parse } from 'csv-parse/sync'
+
+import type { ImportRow, ParsedImportFile } from './types'
+
+export async function parseCSV(buffer: Buffer): Promise<ParsedImportFile> {
+  const rows = parse(buffer, {
+    columns: true,
+    skip_empty_lines: true,
+    trim: true,
+    bom: true,
+  }) as ImportRow[]
+
+  const headers = rows.length > 0 ? Object.keys(rows[0]) : []
+
+  return {
+    headers,
+    rows,
+  }
 }
