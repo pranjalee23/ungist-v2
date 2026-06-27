@@ -1,18 +1,27 @@
 import React from 'react'
-import './styles.css'
+import type { Metadata } from 'next'
+import '../globals.css'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { RevealOnScroll } from '@/components/marketing/RevealOnScroll'
+import { getSiteSettings } from '@/lib/getSiteSettings'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export const metadata: Metadata = {
+  title: 'UNGIST — Crack UPSC with Confidence',
+  description:
+    'UNGIST — Online UPSC preparation across India and offline classroom coaching in Old Rajender Nagar, New Delhi. Structured learning, personal mentorship, CSAT expertise.',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const settings = await getSiteSettings()
 
   return (
     <html lang="en">
       <body>
+        <Header settings={settings} />
         <main>{children}</main>
+        <Footer settings={settings} />
+        <RevealOnScroll />
       </body>
     </html>
   )

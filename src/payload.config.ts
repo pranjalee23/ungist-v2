@@ -17,6 +17,7 @@ import { Authors } from './collections/Authors'
 import { Blogs } from './collections/Blogs'
 import { Leads } from './collections/Leads'
 import { Imports } from './collections/Imports'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,6 +48,7 @@ export default buildConfig({
 
     Imports,
   ],
+  globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

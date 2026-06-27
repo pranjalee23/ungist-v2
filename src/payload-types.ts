@@ -107,8 +107,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -489,6 +493,7 @@ export interface Import {
   id: number;
   name: string;
   type: 'questions' | 'subjects' | 'categories' | 'blogs' | 'authors' | 'students' | 'leads';
+  version?: '1.0' | null;
   /**
    * Upload a CSV, Excel, JSON, or (for Questions) PDF file. Provide this OR a Source URL.
    */
@@ -885,6 +890,7 @@ export interface LeadsSelect<T extends boolean = true> {
 export interface ImportsSelect<T extends boolean = true> {
   name?: T;
   type?: T;
+  version?: T;
   file?: T;
   sourceUrl?: T;
   mode?: T;
@@ -954,6 +960,116 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  contact?: {
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
+  };
+  social?: {
+    youtube?: string | null;
+    instagram?: string | null;
+    twitter?: string | null;
+    facebook?: string | null;
+  };
+  primaryNav?:
+    | {
+        label: string;
+        href: string;
+        hasCaret?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaGhost?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  ctaPrimary?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  footerTagline?: string | null;
+  footerColumns?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  contact?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+        address?: T;
+      };
+  social?:
+    | T
+    | {
+        youtube?: T;
+        instagram?: T;
+        twitter?: T;
+        facebook?: T;
+      };
+  primaryNav?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        hasCaret?: T;
+        id?: T;
+      };
+  ctaGhost?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  ctaPrimary?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  footerTagline?: T;
+  footerColumns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
