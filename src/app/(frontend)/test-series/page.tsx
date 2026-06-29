@@ -1,6 +1,5 @@
 import React from 'react'
 import type { Metadata } from 'next'
-import '../../../styles/test-series.css'
 import { TestSeries } from '@/components/test-series/TestSeries'
 
 export const metadata: Metadata = {

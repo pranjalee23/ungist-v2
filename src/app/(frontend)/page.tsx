@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../styles/home.css'
 import { Hero } from '@/components/marketing/Hero'
 import { Metrics } from '@/components/marketing/Metrics'
 import { Pricing } from '@/components/marketing/Pricing'

@@ -1,5 +1,5 @@
 // For Data Imports - Ensuring all column names are consistent start
-import type { ImportRow } from './types'
+import type { RawRow as ImportRow } from './types'
 
 export const HEADER_MAPS = {
   questions: {

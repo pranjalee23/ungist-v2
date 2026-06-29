@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { Container } from '@/components/ui/Container'
 
 interface Metric {
   count?: number
@@ -33,7 +34,6 @@ export const Metrics = () => {
       const start = performance.now()
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / DURATION)
-        // easeOutCubic
         setProgress(1 - Math.pow(1 - t, 3))
         if (t < 1) raf = requestAnimationFrame(tick)
       }
@@ -62,20 +62,26 @@ export const Metrics = () => {
   }, [])
 
   return (
-    <section className="section bg-surface" style={{ paddingBlock: 'clamp(56px, 7vw, 84px)' }}>
-      <div className="container">
-        <div className="metrics reveal" ref={ref}>
-          {METRICS.map((m) => (
-            <div className="metric" key={m.lbl}>
-              <div className="num">
+    <section className="relative py-[clamp(56px,7vw,84px)] bg-surface">
+      <Container>
+        <div
+          className="reveal grid grid-cols-5 gap-6 text-center max-lg:grid-cols-3 max-[480px]:grid-cols-2"
+          ref={ref}
+        >
+          {METRICS.map((m, idx) => (
+            <div
+              key={m.lbl}
+              className={`px-[18px] py-1.5 border-l-2 border-border ${idx === 0 ? 'border-l-0' : ''}`}
+            >
+              <div className="font-display font-bold text-[clamp(2rem,3.4vw,2.7rem)] tracking-[-0.03em] text-violet [font-variant-numeric:tabular-nums]">
                 {m.display ?? `${Math.round((m.count ?? 0) * progress).toLocaleString('en-US')}${m.suffix ?? ''}`}
               </div>
-              <div className="lbl">{m.lbl}</div>
-              <div className="sub">{m.sub}</div>
+              <div className="text-ink text-base mt-2.5 font-semibold">{m.lbl}</div>
+              <div className="text-muted text-[0.85rem] mt-1">{m.sub}</div>
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

@@ -2,11 +2,33 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 @import "../styles/base.css";
-@import "../styles/components.css";
 
 /* Expose the design tokens to Tailwind utilities (bg-violet, text-ink,
    rounded-xl, shadow-card, font-display, etc.) so future pages can build
    from the same source of truth. */
+/* ── Scroll-reveal (toggled by RevealOnScroll.tsx) ── */
+.reveal,
+.rv {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in,
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Keyframes used by Campus and Hero badge ── */
+@keyframes campusPulse {
+  0%   { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+  50%       { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+}
+
 @theme {
   --color-violet: #9a2ffb;
   --color-violet-soft: #b45cff;
