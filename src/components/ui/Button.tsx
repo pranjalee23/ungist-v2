@@ -11,6 +11,8 @@ interface ButtonProps extends Omit<React.HTMLAttributes<HTMLElement>, 'type'> {
   block?: boolean
   as?: 'a' | 'button'
   href?: string
+  target?: string
+  rel?: string
   type?: 'button' | 'submit' | 'reset'
 }
 
