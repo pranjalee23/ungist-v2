@@ -71,7 +71,7 @@ export const Metrics = () => {
           {METRICS.map((m, idx) => (
             <div
               key={m.lbl}
-              className={`px-[18px] py-1.5 border-l-2 border-border ${idx === 0 ? 'border-l-0' : ''}`}
+              className={`px-[18px] py-1.5 ${idx > 0 ? 'border-l border-border' : ''}`}
             >
               <div className="font-display font-bold text-[clamp(2rem,3.4vw,2.7rem)] tracking-[-0.03em] text-violet [font-variant-numeric:tabular-nums]">
                 {m.display ?? `${Math.round((m.count ?? 0) * progress).toLocaleString('en-US')}${m.suffix ?? ''}`}

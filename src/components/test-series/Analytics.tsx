@@ -1,5 +1,9 @@
 import React from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const AlertIco = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3.5 h-3.5 text-violet flex-none mt-px">
@@ -32,15 +36,15 @@ const BARS = [
 ]
 
 export const Analytics = () => (
-  <section className="py-[clamp(44px,6.5vw,72px)]">
+  <Section id="analytics">
     <Container>
       <div className="grid grid-cols-2 gap-[52px] items-center max-lg:grid-cols-1">
         {/* Left: copy + feature list */}
         <div className="rv">
           <div className="mb-8">
-            <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">Performance Analytics</span>
-            <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">Know exactly what to fix after every test.</h2>
-            <p className="text-muted text-[0.9rem] mt-2 max-w-[500px] leading-[1.6]">Your dashboard shows where you actually stand — not just your score, but why you got it.</p>
+            <Eyebrow>Performance Analytics</Eyebrow>
+            <Heading as="h2" className="mt-2">Know exactly what to fix after every test.</Heading>
+            <Text variant="sm" muted className="mt-2 max-w-[500px]">Your dashboard shows where you actually stand — not just your score, but why you got it.</Text>
           </div>
           <div className="flex flex-col gap-[13px] mt-[22px]">
             {FEATURES.map((f) => (
@@ -49,8 +53,8 @@ export const Analytics = () => (
                   {f.icon}
                 </div>
                 <div>
-                  <h4 className="text-[0.88rem] font-bold mb-0.5">{f.title}</h4>
-                  <p className="text-[0.78rem] text-muted leading-[1.5]">{f.desc}</p>
+                  <Heading as="h4" className="text-[0.88rem] mb-0.5">{f.title}</Heading>
+                  <Text variant="xs" muted>{f.desc}</Text>
                 </div>
               </div>
             ))}
@@ -58,14 +62,14 @@ export const Analytics = () => (
         </div>
 
         {/* Right: mock dashboard card */}
-        <div className="rv bg-white border border-border rounded-[32px] p-5 shadow-[0_0_0_1px_rgba(20,12,40,0.07),0_4px_12px_rgba(20,12,40,0.07)] max-lg:hidden">
+        <div className="rv bg-white border border-border rounded-xl p-5 max-lg:hidden">
           <div className="flex items-center justify-between mb-3.5">
-            <h4 className="text-[0.88rem] font-bold">Post-test Dashboard</h4>
+            <Heading as="h4" className="text-[0.88rem]">Post-test Dashboard</Heading>
             <span className="text-[0.68rem] font-bold bg-lavender text-violet px-[9px] py-[3px] rounded-full">Full-Length Mock · Sample</span>
           </div>
 
           {/* Stats grid */}
-          <div className="grid grid-cols-4 gap-px bg-border rounded-[18px] overflow-hidden mb-3.5 max-[480px]:grid-cols-2">
+          <div className="grid grid-cols-4 gap-px bg-border rounded-md overflow-hidden mb-3.5 max-[480px]:grid-cols-2">
             {STATS.map((s) => (
               <div key={s.label} className="bg-white px-1.5 py-[10px] text-center">
                 <div className={`font-display font-bold text-[1.05rem] ${s.violet ? 'text-violet' : 'text-ink'}`}>{s.val}</div>
@@ -83,24 +87,24 @@ export const Analytics = () => (
                   <span className="text-violet font-bold">{b.pc}</span>
                 </div>
                 <div className="h-[6px] rounded-full bg-[#EFEAF6] overflow-hidden">
-                  <i className={`block h-full rounded-full ${b.good ? 'bg-[--grad]' : 'bg-[linear-gradient(90deg,#F97316,#FBBF24)]'}`} style={{ width: b.pc }} />
+                  <i className={`block h-full rounded-full ${b.good ? '[background:var(--grad)]' : 'bg-[linear-gradient(90deg,#F97316,#FBBF24)]'}`} style={{ width: b.pc }} />
                 </div>
               </div>
             ))}
           </div>
 
           {/* Fluke callout */}
-          <div className="flex items-start gap-[9px] bg-lavender rounded-[12px] px-3 py-[10px]">
+          <div className="flex items-start gap-[9px] bg-lavender rounded-sm px-3 py-[10px]">
             <AlertIco />
-            <div className="text-[0.76rem] text-violet font-semibold leading-[1.5]">
+            <Text variant="xs" className="text-violet font-semibold">
               Fluke %: 19%{' '}
               <span className="font-normal opacity-80">— 3 of your 16 correct answers were likely guesses. Revise Data Sufficiency fundamentals before the next mock.</span>
-            </div>
+            </Text>
           </div>
         </div>
       </div>
     </Container>
-  </section>
+  </Section>
 )
 
 export default Analytics

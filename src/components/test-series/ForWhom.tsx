@@ -1,5 +1,10 @@
 import React from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
+import { TextLink } from '@/components/ui/TextLink'
 
 const CARDS = [
   {
@@ -20,40 +25,40 @@ const CARDS = [
 ]
 
 export const ForWhom = () => (
-  <section className="py-[clamp(44px,6.5vw,72px)] bg-surface">
+  <Section surface id="for-whom">
     <Container>
       <div className="rv mb-8">
-        <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">Who Is This For</span>
-        <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">This test series is right for you if…</h2>
+        <Eyebrow>Who Is This For</Eyebrow>
+        <Heading as="h2" className="mt-2">This test series is right for you if…</Heading>
       </div>
 
       <div className="rv grid grid-cols-3 gap-3 max-[768px]:grid-cols-1">
         {CARDS.map((c) => (
-          <div key={c.title} className="flex gap-3 items-start bg-surface rounded-[18px] p-[15px]">
+          <div key={c.title} className="flex gap-3 items-start bg-white border border-border rounded-md p-[15px]">
             <div className="w-8 h-8 rounded-[8px] bg-lavender-2 grid place-items-center flex-none">
               {c.icon}
             </div>
             <div>
-              <h4 className="text-[0.84rem] font-bold mb-[3px]">{c.title}</h4>
-              <p className="text-[0.76rem] text-muted leading-[1.5]">{c.desc}</p>
+              <Heading as="h4" className="text-[0.84rem] mb-[3px]">{c.title}</Heading>
+              <Text variant="xs" muted>{c.desc}</Text>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="rv mt-4 flex items-start gap-[9px] bg-[#F0FDF4] rounded-[12px] px-[15px] py-3 border-l-[3px] border-[#22C55E] text-[0.8rem] text-[#166534] leading-[1.6] [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-[#22C55E] [&_svg]:flex-none [&_svg]:mt-0.5 [&_a]:text-violet [&_a]:font-semibold">
+      <div className="rv mt-4 flex items-start gap-[9px] bg-[#F0FDF4] rounded-sm px-[15px] py-3 border-l-[3px] border-success [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-success [&_svg]:flex-none [&_svg]:mt-0.5">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
           <polyline points="22 4 12 14.01 9 11.01" />
         </svg>
-        <span>
+        <Text variant="xs" className="text-[#166534]">
           <strong>Already enrolled in the CSAT Foundation Program?</strong> The Comprehensive Test
           Series is included in your Foundation plan. You do not need to buy it separately.{' '}
-          <a href="/#counselling">Call us</a> at +91‑9643822021 to confirm.
-        </span>
+          <TextLink href="/#counselling" size="xs" arrow={false}>Call us</TextLink> at +91‑9643822021 to confirm.
+        </Text>
       </div>
     </Container>
-  </section>
+  </Section>
 )
 
 export default ForWhom

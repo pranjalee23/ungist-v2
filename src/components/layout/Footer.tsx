@@ -3,18 +3,18 @@ import type { SiteSetting } from '@/payload-types'
 import { Container } from '@/components/ui/Container'
 
 const IconMap = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-[#b45cff] flex-none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-violet-soft flex-none">
     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
     <circle cx="12" cy="10" r="3" />
   </svg>
 )
 const IconPhone = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-[#b45cff] flex-none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-violet-soft flex-none">
     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
   </svg>
 )
 const IconMail = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-[#b45cff] flex-none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4 mt-px text-violet-soft flex-none">
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="m22 7-10 5L2 7" />
   </svg>
@@ -43,7 +43,7 @@ const IconFacebook = () => (
   </svg>
 )
 
-const socialLinkCls = 'w-[38px] h-[38px] rounded-[11px] border border-white/[0.12] bg-white/5 grid place-items-center text-white transition-[background,border-color] duration-200 hover:bg-[--grad] hover:border-transparent'
+const socialLinkCls = 'w-[38px] h-[38px] rounded-[11px] border border-white/[0.12] bg-white/5 grid place-items-center text-white transition-[background,border-color] duration-200 hover:[background:var(--grad)] hover:border-transparent'
 
 export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
   const { contact, social, footerColumns, footerTagline, copyright } = settings
@@ -110,7 +110,7 @@ export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
                 <a
                   key={j}
                   href={link.href}
-                  className="block text-[0.88rem] text-white/[0.66] mb-[11px] transition-colors duration-200 hover:text-white"
+                  className="block text-[0.88rem] text-white/[0.66] mb-[11px] transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:text-white"
                 >
                   {link.label}
                 </a>
@@ -122,9 +122,9 @@ export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
         <div className="border-t border-white/[0.12] mt-12 pt-6 flex justify-between flex-wrap gap-3 text-[0.82rem] text-white/50">
           <span>{copyright}</span>
           <span className="flex gap-[22px] flex-wrap">
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-[#b45cff]">Privacy Policy</a>
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-[#b45cff]">Terms of Service</a>
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-[#b45cff]">Refund Policy</a>
+            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Privacy Policy</a>
+            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Terms of Service</a>
+            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Refund Policy</a>
           </span>
         </div>
       </Container>

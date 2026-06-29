@@ -5,7 +5,7 @@ import { Container } from '@/components/ui/Container'
 import { Button } from '@/components/ui/Button'
 
 const ChevronIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-3 h-3 text-muted-2 flex-none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-3 h-3 text-subtle flex-none">
     <polyline points="9 18 15 12 9 6" />
   </svg>
 )
@@ -16,7 +16,7 @@ const ClockIco = () => (
   </svg>
 )
 const CheckIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-[13px] h-[13px] text-[#22C55E] flex-none">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-[13px] h-[13px] text-success flex-none">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 )
@@ -87,10 +87,10 @@ const Panel = ({ tab }: { tab: Tab }) => {
     <div>
       <div className="font-display font-bold text-[1.8rem] tracking-[-0.03em] mb-0.5">{p.price}</div>
       <div className="text-[0.76rem] text-muted mb-[13px]">One-time · valid till Prelims 2027</div>
-      <div className="text-[0.7rem] font-bold tracking-[0.08em] uppercase text-muted-2 mb-1.5">Select Batch</div>
+      <div className="text-[0.7rem] font-bold tracking-[0.08em] uppercase text-subtle mb-1.5">Select Batch</div>
       <select
         defaultValue=""
-        className="w-full font-sans text-[0.86rem] text-ink border-[1.5px] border-border rounded-[12px] px-[11px] py-[9px] outline-none bg-white cursor-pointer mb-[11px] transition-[border-color] duration-200 focus:border-violet"
+        className="w-full font-sans text-[0.86rem] text-ink border-[1.5px] border-border rounded-sm px-[11px] py-[9px] outline-none bg-white cursor-pointer mb-[11px] transition-[border-color] duration-200 focus:border-violet"
       >
         <option value="">Choose a batch…</option>
         {p.batches.map((b) => <option key={b}>{b}</option>)}
@@ -102,13 +102,13 @@ const Panel = ({ tab }: { tab: Tab }) => {
       <div className="border-t border-border my-[13px]" />
       <div className="flex flex-col gap-1.5">
         {p.includes.map((item) => (
-          <div key={item} className="flex items-center gap-[7px] text-[0.78rem] text-[#2c3138]">
+          <div key={item} className="flex items-center gap-[7px] text-[0.78rem] text-secondary">
             <CheckIco />
             {item}
           </div>
         ))}
       </div>
-      <p className="text-[0.71rem] text-muted-2 text-center mt-[9px] leading-[1.5]">{p.note}</p>
+      <p className="text-[0.71rem] text-subtle text-center mt-[9px] leading-[1.5]">{p.note}</p>
     </div>
   )
 }
@@ -149,7 +149,7 @@ export const ProductHeader = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => v
             </p>
             <div className="flex flex-col gap-[7px]">
               {FACTS.map((f) => (
-                <span key={f.text} className="flex items-center gap-2 text-[12.5px] font-medium text-[#2c3138]">
+                <span key={f.text} className="flex items-center gap-2 text-[12.5px] font-medium text-secondary">
                   {f.icon}
                   {f.text}
                 </span>
@@ -158,14 +158,14 @@ export const ProductHeader = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => v
           </div>
 
           {/* Purchase card */}
-          <div className="rv bg-white border-[1.5px] border-border rounded-[32px] p-5 shadow-[0_0_0_1px_rgba(20,12,40,0.07),0_4px_12px_rgba(20,12,40,0.07)] sticky top-20">
+          <div className="rv bg-white border-[1.5px] border-border rounded-xl p-5 shadow-2 sticky top-20">
             {/* Tab switcher */}
-            <div className="flex bg-surface rounded-[12px] p-[3px] mb-4">
+            <div className="flex bg-surface rounded-sm p-[3px] mb-4">
               {(['comp', 'mock'] as const).map((t) => (
                 <div
                   key={t}
                   onClick={() => setTab(t)}
-                  className={`flex-1 text-center py-[7px] px-1 rounded-[9px] text-[0.8rem] font-semibold cursor-pointer transition-[background,color,box-shadow] duration-200 ${tab === t ? 'bg-white text-ink shadow-[0_0_0_1px_rgba(20,12,40,0.06)]' : 'text-muted'}`}
+                  className={`flex-1 text-center py-[7px] px-1 rounded-[9px] text-[0.8rem] font-semibold cursor-pointer transition-[background,color,box-shadow] duration-200 ${tab === t ? 'bg-white text-ink shadow-1' : 'text-muted'}`}
                 >
                   {t === 'comp' ? 'Comprehensive' : 'Mock Only'}
                 </div>

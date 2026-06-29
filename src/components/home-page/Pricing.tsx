@@ -6,6 +6,10 @@ import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { SectionHead } from '@/components/ui/SectionHead'
 import { Button } from '@/components/ui/Button'
+import { Badge } from '@/components/ui/Badge'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
+import { TextLink } from '@/components/ui/TextLink'
 
 const FEATURES = [
   'Live Lectures',
@@ -72,20 +76,14 @@ const TOPICS = [
 ]
 
 const CheckIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-[18px] h-[18px] flex-none text-[#16A34A]">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-[18px] h-[18px] flex-none text-success-fg">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 )
 const XIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-[18px] h-[18px] flex-none text-[#CBD2D9]">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-[18px] h-[18px] flex-none text-disabled">
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-)
-const ArrowIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-[13px] h-[13px]">
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
   </svg>
 )
 const ClockIco = () => (
@@ -103,9 +101,9 @@ const InfoIco = () => (
 )
 
 const tierBorderCls = (variant?: string) => {
-  if (variant === 'popular') return 'border-[2px] border-violet hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)]'
-  if (variant === 'pro') return 'border-[1.5px] border-[#1a1a1a] hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)]'
-  return 'border-[1.5px] border-border hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)]'
+  if (variant === 'popular') return 'border-[2px] border-violet hover:shadow-md'
+  if (variant === 'pro') return 'border-[1.5px] border-ink hover:shadow-md'
+  return 'border-[1.5px] border-border hover:shadow-md hover:border-white'
 }
 
 const TierCard = ({ tier }: { tier: Tier }) => {
@@ -115,22 +113,20 @@ const TierCard = ({ tier }: { tier: Tier }) => {
   return (
     <article
       id={tier.id}
-      className={`reveal relative bg-white rounded-[32px] p-8 flex flex-col overflow-hidden transition-[box-shadow,border-color] duration-300 ${tierBorderCls(tier.variant)}`}
+      className={`reveal relative bg-white rounded-xl p-8 flex flex-col overflow-hidden transition-[box-shadow,border-color] duration-300 ${tierBorderCls(tier.variant)}`}
     >
       <div className="flex items-center justify-between gap-[10px] mb-2.5">
         <div className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">{tier.name}</div>
-        <span className={`text-[12px] font-bold px-[13px] py-[5px] rounded-full whitespace-nowrap ${isProBadge ? 'bg-ink text-white' : 'bg-lavender text-violet'}`}>
-          {tier.badge}
-        </span>
+        <Badge variant={isProBadge ? 'dark' : 'brand'}>{tier.badge}</Badge>
       </div>
 
-      <div className="text-[13.5px] text-muted mb-5">{tier.tag}</div>
+      <Text variant="xs" muted className="mb-5">{tier.tag}</Text>
 
       <ul className="grid gap-[13px] p-0 mt-[22px]">
         {FEATURES.map((label, i) => {
           const off = i >= tier.included
           return (
-            <li key={label} className={`flex items-center gap-[11px] text-[14px] font-medium ${off ? 'text-muted-2 font-normal' : 'text-[#3a4047]'}`}>
+            <li key={label} className={`flex items-center gap-[11px] text-[14px] font-medium ${off ? 'text-subtle font-normal' : 'text-secondary'}`}>
               {off ? <XIco /> : <CheckIco />}
               {label}
             </li>
@@ -143,7 +139,7 @@ const TierCard = ({ tier }: { tier: Tier }) => {
           <div
             key={m.label}
             onClick={() => setMode(i)}
-            className={`border-[1.5px] rounded-[14px] px-[14px] py-3 cursor-pointer transition-[border-color,background] duration-200 ${mode === i ? 'border-violet bg-lavender' : 'border-border bg-white hover:border-[#CBD2D9] hover:bg-surface'}`}
+            className={`border-[1.5px] rounded-card px-[14px] py-3 cursor-pointer transition-[border-color,background] duration-200 ${mode === i ? 'border-violet bg-lavender' : 'border-border bg-white hover:border-disabled hover:bg-surface'}`}
           >
             <span className={`block text-[12px] font-semibold mb-1 ${mode === i ? 'text-violet' : 'text-muted'}`}>{m.label}</span>
             <span className="block font-display font-bold text-[1.35rem] tracking-[-0.02em] text-ink">{m.price}</span>
@@ -151,14 +147,9 @@ const TierCard = ({ tier }: { tier: Tier }) => {
         ))}
       </div>
 
-      <a href={tier.enrollHref} className="group relative mt-4 inline-flex items-center justify-center gap-2 w-full px-6 py-[13px] rounded-[12px] bg-[--grad] text-white font-bold text-[15px] overflow-hidden transition-[box-shadow] duration-[250ms] hover:shadow-[0_2px_12px_rgba(20,12,40,0.14)]">
-        <span aria-hidden className="absolute inset-0 -z-[1] bg-[--grad] scale-x-0 origin-left transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100" />
+      <Button variant="primary" block as="a" href={tier.enrollHref} className="mt-4">
         Enroll Now
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 flex-none">
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </a>
+      </Button>
 
       <div className="flex items-center justify-center gap-1.5 text-[12px] text-muted mt-3.5">
         <ClockIco />
@@ -176,7 +167,7 @@ export const Pricing = () => {
       <Container>
         <SectionHead center className="reveal">
           <Eyebrow>UPSC CSAT Foundation Program</Eyebrow>
-          <h2 className="text-[36px] font-bold tracking-[-0.025em] mt-[18px]">One Program, Flexible Plans</h2>
+          <Heading as="h2">One Program, Flexible Plans</Heading>
         </SectionHead>
 
         {/* Batch strip */}
@@ -190,11 +181,11 @@ export const Pricing = () => {
         </div>
 
         {/* Topics row */}
-        <div className="reveal flex items-center gap-[14px] flex-wrap px-5 py-4 border border-border rounded-[14px] bg-white mb-9">
+        <div className="reveal flex items-center gap-[14px] flex-wrap px-5 py-4 border border-border rounded-card bg-white mb-9">
           <span className="text-[12px] font-extrabold tracking-[0.08em] text-ink whitespace-nowrap">TOPICS COVERED</span>
           <div className="flex flex-wrap gap-2">
             {TOPICS.map((t) => (
-              <span key={t} className="text-[13px] px-[13px] py-[5px] rounded-full border border-[#DDD6F5] bg-[#F5F3FF] text-ink whitespace-nowrap">{t}</span>
+              <span key={t} className="text-[13px] px-[13px] py-[5px] rounded-full border border-lavender-3 bg-[#F5F3FF] text-ink whitespace-nowrap">{t}</span>
             ))}
           </div>
         </div>
@@ -204,15 +195,9 @@ export const Pricing = () => {
         </div>
 
         <div className="reveal text-center mt-7">
-          <button
-            type="button"
-            onClick={() => setModalOpen(true)}
-            className="inline-flex items-center gap-2 bg-none border-none cursor-pointer text-violet font-semibold text-[14px] font-sans [&_svg]:w-4 [&_svg]:h-4 [&_svg]:flex-none"
-          >
-            <InfoIco />
+          <TextLink as="button" onClick={() => setModalOpen(true)} icon={<InfoIco />}>
             Learn about Included Resources in Plus &amp; Pro Plans
-            <ArrowIco />
-          </button>
+          </TextLink>
         </div>
       </Container>
 
@@ -228,14 +213,14 @@ const ResourcesModal = ({ open, onClose }: { open: boolean; onClose: () => void 
       onClick={onClose}
     />
     <div
-      className={`fixed top-1/2 left-1/2 z-[201] bg-white rounded-[32px] p-8 w-[min(900px,92vw)] max-h-[88vh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 transition-[transform,opacity] duration-300 [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)] max-[768px]:p-[20px_18px_32px] ${open ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-95 opacity-0 pointer-events-none'}`}
+      className={`fixed top-1/2 left-1/2 z-[201] bg-white rounded-xl p-8 w-[min(900px,92vw)] max-h-[88vh] overflow-y-auto -translate-x-1/2 -translate-y-1/2 transition-[transform,opacity] duration-300 [transition-timing-function:var(--ease-spring)] max-[768px]:p-[20px_18px_32px] ${open ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-95 opacity-0 pointer-events-none'}`}
     >
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
           <div className="font-display font-bold text-[1.1rem] text-ink">What&apos;s Included in the CSAT Foundation Program</div>
-          <div className="text-[13px] text-muted mt-1">These learning resources are included in the Plus and Pro plans.</div>
+          <Text variant="xs" muted className="mt-1">These learning resources are included in the Plus and Pro plans.</Text>
         </div>
-        <button type="button" aria-label="Close resources modal" onClick={onClose} className="w-8 h-8 rounded-full border-none bg-surface grid place-items-center cursor-pointer flex-none [&_svg]:w-[15px] [&_svg]:h-[15px] [&_svg]:text-[#3a4047]">
+        <button type="button" aria-label="Close resources modal" onClick={onClose} className="w-8 h-8 rounded-full border-none bg-surface grid place-items-center cursor-pointer flex-none [&_svg]:w-[15px] [&_svg]:h-[15px] [&_svg]:text-secondary">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -264,23 +249,22 @@ const ResourcesModal = ({ open, onClose }: { open: boolean; onClose: () => void 
             cta: { href: '#courses', label: 'Explore Test Series' },
           },
         ].map(({ title, body, icon, cta }) => (
-          <div key={title} className="bg-surface rounded-[14px] p-5">
-            <span className="w-10 h-10 rounded-[10px] bg-lavender text-violet grid place-items-center mb-3 [&_svg]:w-5 [&_svg]:h-5">
+          <div key={title} className="bg-surface rounded-card p-5">
+            <span className="w-10 h-10 rounded-xs bg-lavender text-violet grid place-items-center mb-3 [&_svg]:w-5 [&_svg]:h-5">
               {icon}
             </span>
-            <h4 className="text-[14px] font-bold text-ink mb-2">{title}</h4>
-            <p className="text-[13px] text-muted leading-[1.55]">{body}</p>
+            <Heading as="h4" className="mb-2">{title}</Heading>
+            <Text variant="xs" muted className="leading-[1.55]">{body}</Text>
             {cta && (
-              <a href={cta.href} className="inline-flex items-center gap-[5px] text-[13px] font-semibold text-violet mt-3.5 [&_svg]:w-[13px] [&_svg]:h-[13px]">
+              <TextLink href={cta.href} size="xs" className="mt-3.5">
                 {cta.label}
-                <ArrowIco />
-              </a>
+              </TextLink>
             )}
           </div>
         ))}
       </div>
 
-      <div className="flex items-center gap-2 text-[12.5px] text-muted border-t border-border pt-4 [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:flex-none [&_svg]:text-muted-2">
+      <div className="flex items-center gap-2 text-[12.5px] text-muted border-t border-border pt-4 [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:flex-none [&_svg]:text-subtle">
         <InfoIco />
         Base plan includes core learning features (Live Lectures, Notes, Doubt Support, PYQ Solutions).
       </div>

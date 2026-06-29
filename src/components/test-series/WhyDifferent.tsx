@@ -1,5 +1,9 @@
 import React from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const icoColors: Record<string, { bg: string; text: string }> = {
   vl: { bg: '#F7F0FE', text: '#9A2FFB' },
@@ -36,30 +40,30 @@ const CARDS = [
 ]
 
 export const WhyDifferent = () => (
-  <section className="py-[clamp(44px,6.5vw,72px)] bg-surface">
+  <Section surface id="why-different">
     <Container>
       <div className="rv mb-8">
-        <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">Why UNGIST</span>
-        <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">Built differently from every other CSAT series.</h2>
+        <Eyebrow>Why UNGIST</Eyebrow>
+        <Heading as="h2" className="mt-2">Built differently from every other CSAT series.</Heading>
       </div>
       <div className="grid grid-cols-2 gap-3.5 max-[768px]:grid-cols-1">
         {CARDS.map((c) => {
           const col = icoColors[c.color]
           return (
-            <div key={c.title} className="rv flex gap-[15px] items-start bg-white border border-border rounded-[24px] p-5 transition-[box-shadow] duration-300 hover:shadow-[0_0_0_1px_rgba(20,12,40,0.07),0_8px_24px_rgba(20,12,40,0.10)]">
+            <div key={c.title} className="rv flex gap-[15px] items-start bg-white border border-border rounded-lg p-5 shadow-sm transition-[box-shadow] duration-300 hover:shadow-card">
               <span className="w-[38px] h-[38px] rounded-[10px] grid place-items-center flex-none [&_svg]:w-[17px] [&_svg]:h-[17px]" style={{ background: col.bg, color: col.text }}>
                 {c.icon}
               </span>
               <div>
-                <h3 className="text-[0.9rem] font-bold mb-1">{c.title}</h3>
-                <p className="text-[0.8rem] text-muted leading-[1.6]">{c.desc}</p>
+                <Heading as="h3" className="text-[0.9rem] mb-1">{c.title}</Heading>
+                <Text variant="xs" muted>{c.desc}</Text>
               </div>
             </div>
           )
         })}
       </div>
     </Container>
-  </section>
+  </Section>
 )
 
 export default WhyDifferent

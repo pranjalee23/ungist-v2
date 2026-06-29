@@ -2,6 +2,8 @@ import React from 'react'
 import { Container } from '@/components/ui/Container'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const BookIco = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
 const UsersIco = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
@@ -27,37 +29,37 @@ const INFO = [
 ]
 
 export const Campus = () => (
-  <Section id="about">
+  <Section surface id="about">
     <Container>
       <div className="grid grid-cols-[1.1fr_0.9fr] gap-12 items-start max-lg:grid-cols-1">
         {/* Left column */}
         <div className="reveal">
           <div className="max-w-[680px]">
             <Eyebrow>Our Institute</Eyebrow>
-            <h2 className="text-[36px] font-bold tracking-[-0.025em] mt-[18px]">Where Toppers Are Made</h2>
+            <Heading as="h2" className="mt-[18px]">Where Toppers Are Made</Heading>
           </div>
           <div className="flex items-center gap-[7px] text-muted text-[14px] mt-3.5">
             <span className="w-4 h-4 text-violet flex-none"><PinIco /></span>
             Old Rajender Nagar, New Delhi — 110060
           </div>
-          <p className="text-muted text-[15px] mt-[18px] leading-[1.6] max-w-[480px]">
+          <Text variant="sm" muted className="mt-[18px] leading-[1.6] max-w-[480px]">
             Our Old Rajender Nagar centre is located at the heart of Delhi&apos;s coaching hub. Designed
             for focused UPSC preparation, the campus provides a distraction-free, academically
             enriching environment.
-          </p>
+          </Text>
 
           <div className="grid grid-cols-2 gap-4 mt-7">
             {FEATURES.map((f) => (
               <div
                 key={f.title}
-                className="border border-border rounded-[18px] p-[18px] flex gap-[13px] items-start transition-[border-color,box-shadow] duration-300 hover:border-[#E2D3F6] hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)]"
+                className="border border-border rounded-md p-[18px] flex gap-[13px] items-start transition-[border-color,box-shadow] duration-300 hover:shadow-sm hover:border-white"
               >
                 <span className="w-[38px] h-[38px] rounded-[11px] bg-lavender text-violet grid place-items-center flex-none">
                   {f.icon}
                 </span>
                 <div>
                   <div className="font-bold text-[14px] text-ink">{f.title}</div>
-                  <div className="text-[13px] text-muted mt-1 leading-[1.5]">{f.desc}</div>
+                  <Text variant="xs" muted className="mt-1 leading-[1.5]">{f.desc}</Text>
                 </div>
               </div>
             ))}
@@ -72,10 +74,10 @@ export const Campus = () => (
         </div>
 
         {/* Right: info card */}
-        <div className="reveal rounded-[32px] overflow-hidden border border-border">
+        <div className="reveal rounded-xl overflow-hidden border border-border transition-[box-shadow,border-color] duration-300 hover:shadow-md hover:border-white mt-10">
           <div className="relative bg-[linear-gradient(160deg,#F1E9FD_0%,#FBF9FE_100%)] pt-10 pb-10 px-6 text-center overflow-hidden">
             {/* Pulse rings */}
-            <span className="absolute top-10 left-1/2 -ml-8 w-16 h-16 rounded-full border border-violet [animation:campusPulse_2.6s_ease-out_infinite] pointer-events-none" />
+            <span className="absolute top-10 left-1/2 -ml-8 w-16 h-16 rounded-full border border-violet animate-campus-pulse pointer-events-none" />
             <span className="absolute top-10 left-1/2 -ml-8 w-16 h-16 rounded-full border border-violet [animation:campusPulse_2.6s_ease-out_0.9s_infinite] pointer-events-none" />
 
             <span className="relative z-[1] w-16 h-16 rounded-[18px] bg-white border-[1.5px] border-violet text-violet grid place-items-center mx-auto mb-3.5 [&_svg]:w-[26px] [&_svg]:h-[26px]">
@@ -89,7 +91,7 @@ export const Campus = () => (
             {INFO.map((r) => (
               <div key={r.lbl} className="grid grid-cols-[108px_1fr] gap-3">
                 <div className="text-[13px] font-bold text-violet">{r.lbl}</div>
-                <div className="text-[14px] text-[#3a4047] leading-[1.5]">{r.val}</div>
+                <div className="text-[14px] text-secondary leading-[1.5]">{r.val}</div>
               </div>
             ))}
           </div>
