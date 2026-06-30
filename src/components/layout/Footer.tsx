@@ -1,4 +1,7 @@
+'use client'
+
 import React from 'react'
+import { usePathname } from 'next/navigation'
 import type { SiteSetting } from '@/payload-types'
 import { Container } from '@/components/ui/Container'
 
@@ -45,8 +48,18 @@ const IconFacebook = () => (
 
 const socialLinkCls = 'w-[38px] h-[38px] rounded-[11px] border border-white/[0.12] bg-white/5 grid place-items-center text-white transition-[background,border-color] duration-200 hover:[background:var(--grad)] hover:border-transparent'
 
+const LEGAL_LINKS = [
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Refund Policy', href: '/refund-policy' },
+]
+
 export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
   const { contact, social, footerColumns, footerTagline, copyright } = settings
+  const pathname = usePathname()
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/')
 
   return (
     <footer
@@ -106,15 +119,21 @@ export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
               <h4 className="text-white text-[0.92rem] font-bold tracking-[0.02em] mb-[18px]">
                 {col.title}
               </h4>
-              {(col.links ?? []).map((link, j) => (
-                <a
-                  key={j}
-                  href={link.href}
-                  className="block text-[0.88rem] text-white/[0.66] mb-[11px] transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:text-white"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {(col.links ?? []).map((link, j) => {
+                const active = isActive(link.href)
+                return (
+                  <a
+                    key={j}
+                    href={link.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={`block text-[0.88rem] mb-[11px] transition-colors duration-200 focus-visible:outline-none focus-visible:text-white ${
+                      active ? 'text-white font-medium' : 'text-white/[0.66] hover:text-white'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
             </div>
           ))}
         </div>
@@ -122,9 +141,21 @@ export const Footer: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
         <div className="border-t border-white/[0.12] mt-12 pt-6 flex justify-between flex-wrap gap-3 text-[0.82rem] text-white/50">
           <span>{copyright}</span>
           <span className="flex gap-[22px] flex-wrap">
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Privacy Policy</a>
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Terms of Service</a>
-            <a href="#" className="text-white/50 transition-colors duration-200 hover:text-violet-soft focus-visible:outline-none focus-visible:text-violet-soft">Refund Policy</a>
+            {LEGAL_LINKS.map((l) => {
+              const active = isActive(l.href)
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`transition-colors duration-200 focus-visible:outline-none focus-visible:text-violet-soft ${
+                    active ? 'text-violet-soft' : 'text-white/50 hover:text-violet-soft'
+                  }`}
+                >
+                  {l.label}
+                </a>
+              )
+            })}
           </span>
         </div>
       </Container>

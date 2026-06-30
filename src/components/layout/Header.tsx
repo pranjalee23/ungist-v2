@@ -134,7 +134,7 @@ export const Header: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
 
         <div className="flex items-center gap-[22px]">
           {ghost?.href && (
-            <Button variant="soft" href={ghost.href} className="!py-[10px] !px-5 max-lg:hidden">
+            <Button variant="ghost" href={ghost.href} className="!py-[10px] !px-5 max-lg:hidden">
               {ghost.label}
             </Button>
           )}
@@ -216,7 +216,7 @@ export const Header: React.FC<{ settings: SiteSetting }> = ({ settings }) => {
 
         <div className="flex-none px-5 pb-5 pt-3 border-t border-border flex flex-col gap-2.5">
           {ghost?.href && (
-            <Button variant="soft" href={ghost.href} block onClick={() => setOpen(false)}>
+            <Button variant="ghost" href={ghost.href} block onClick={() => setOpen(false)}>
               {ghost.label}
             </Button>
           )}

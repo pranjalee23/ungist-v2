@@ -21,7 +21,7 @@ const base =
 
 const variants: Record<Variant, string> = {
   primary: 'bg-violet text-white group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
-  ghost: 'bg-white text-ink border-[1.5px] border-border hover:text-violet hover:border-violet hover:shadow-[0_2px_12px_rgba(20,12,40,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2',
+  ghost: 'bg-white text-ink border-[1.5px] border-border hover:shadow-[0_2px_12px_rgba(20,12,40,0.1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2',
   soft: 'bg-lavender-2 text-violet transition-[background] hover:bg-[#e6d2fb] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2',
 }
 
