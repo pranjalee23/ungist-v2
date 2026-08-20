@@ -1,5 +1,9 @@
 import React from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const icoColors: Record<string, { bg: string; text: string }> = {
   vl: { bg: '#F7F0FE', text: '#9A2FFB' },
@@ -35,14 +39,14 @@ const CARDS = [
 ]
 
 export const Included = () => (
-  <section className="py-[clamp(44px,6.5vw,72px)]">
+  <Section id="included">
     <Container>
-      <div className="rv mb-8">
-        <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">What&apos;s Included</span>
-        <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">Three types of tests. One clear goal.</h2>
-        <p className="text-muted text-[0.9rem] mt-2 max-w-[500px] leading-[1.6]">Comprehensive gives you all three. Mock Only gives you full-length mocks with video solutions.</p>
+      <div className="reveal mb-8">
+        <Eyebrow>What&apos;s Included</Eyebrow>
+        <Heading as="h2" className="mt-2">Three types of tests. One clear goal.</Heading>
+        <Text variant="sm" muted className="mt-2 max-w-[500px]">Comprehensive gives you all three. Mock Only gives you full-length mocks with video solutions.</Text>
       </div>
-      <div className="rv grid grid-cols-3 gap-px bg-border rounded-[24px] overflow-hidden max-[768px]:grid-cols-1">
+      <div className="reveal grid grid-cols-3 gap-px bg-border rounded-lg overflow-hidden max-[768px]:grid-cols-1">
         {CARDS.map((c) => {
           const col = icoColors[c.color]
           return (
@@ -51,8 +55,8 @@ export const Included = () => (
                 {c.icon}
               </span>
               <span className="block font-display font-bold text-[1.5rem] text-violet tracking-[-0.02em] mb-1">{c.count}</span>
-              <h3 className="text-[0.93rem] font-bold mb-[5px]">{c.title}</h3>
-              <p className="text-[0.8rem] text-muted leading-[1.6]">{c.desc}</p>
+              <Heading as="h3" className="text-[0.93rem] mb-[5px]">{c.title}</Heading>
+              <Text variant="xs" muted>{c.desc}</Text>
               <span className={`inline-flex items-center gap-[5px] mt-[10px] text-[0.7rem] font-semibold px-[9px] py-[3px] rounded-full ${c.badge.type === 'vid' ? 'bg-[#EFF6FF] text-[#2563EB]' : 'bg-surface text-muted'}`}>
                 {c.badge.play && (
                   <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" className="w-[11px] h-[11px]">
@@ -66,7 +70,7 @@ export const Included = () => (
         })}
       </div>
     </Container>
-  </section>
+  </Section>
 )
 
 export default Included

@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { Container } from '@/components/ui/Container'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const FAQS = [
   { q: 'What is CSAT in UPSC?', a: 'CSAT (Civil Services Aptitude Test) is Paper-II of the UPSC Prelims exam, testing comprehension, reasoning, and basic numeracy on a qualifying basis.' },
@@ -19,29 +21,23 @@ const FAQS = [
 ]
 
 export const Faq = () => {
-  const [open, setOpen] = useState<Set<number>>(new Set([0]))
-
-  const toggle = (i: number) =>
-    setOpen((prev) => {
-      const next = new Set(prev)
-      next.has(i) ? next.delete(i) : next.add(i)
-      return next
-    })
+  const [open, setOpen] = useState<number | null>(0)
+  const toggle = (i: number) => setOpen((prev) => (prev === i ? null : i))
 
   return (
-    <Section id="faq">
+    <Section surface id="faq">
       <Container>
         <div className="reveal max-w-[680px] mb-[54px]">
           <Eyebrow>FAQs</Eyebrow>
-          <h2 className="text-[36px] font-bold tracking-[-0.025em] mt-[18px]">Everything You Wanted to Know About CSAT</h2>
+          <Heading as="h2">Everything You Wanted to Know About CSAT</Heading>
         </div>
         <div className="max-w-[840px] mx-auto flex flex-col gap-3.5">
           {FAQS.map((item, i) => {
-            const isOpen = open.has(i)
+            const isOpen = open === i
             return (
               <div
                 key={item.q}
-                className={`border rounded-[18px] overflow-hidden transition-[border-color] duration-200 ${isOpen ? 'border-[#b45cff] bg-lavender' : 'border-border bg-white'}`}
+                className={`border rounded-md overflow-hidden transition-[border-color,box-shadow] duration-200 hover:shadow-sm hover:border-white ${isOpen ? 'border-violet-soft bg-white' : 'border-border bg-white'}`}
               >
                 <button
                   type="button"
@@ -50,16 +46,16 @@ export const Faq = () => {
                 >
                   {item.q}
                   <span
-                    className={`flex-none text-[1.3rem] font-normal text-violet leading-none transition-transform duration-[250ms] [transition-timing-function:cubic-bezier(0.2,0.7,0.2,1)] ${isOpen ? 'rotate-45' : ''}`}
+                    className={`flex-none text-[1.3rem] font-normal text-violet leading-none transition-transform duration-[250ms] [transition-timing-function:var(--ease)] ${isOpen ? 'rotate-45' : ''}`}
                   >
                     +
                   </span>
                 </button>
                 <div
-                  className="overflow-hidden transition-[max-height] duration-300 [transition-timing-function:cubic-bezier(0.2,0.7,0.2,1)]"
+                  className="overflow-hidden transition-[max-height] duration-300 [transition-timing-function:var(--ease)]"
                   style={{ maxHeight: isOpen ? '300px' : '0' }}
                 >
-                  <p className="px-[22px] pb-5 text-muted text-[0.97rem] leading-[1.6]">{item.a}</p>
+                  <Text variant="sm" muted className="px-[22px] pb-5 text-[0.97rem] leading-[1.6]">{item.a}</Text>
                 </div>
               </div>
             )

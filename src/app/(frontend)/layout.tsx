@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { RevealOnScroll } from '@/components/marketing/RevealOnScroll'
+import { RevealOnScroll } from '@/components/home-page/RevealOnScroll'
 import { getSiteSettings } from '@/lib/getSiteSettings'
 
 export const metadata: Metadata = {

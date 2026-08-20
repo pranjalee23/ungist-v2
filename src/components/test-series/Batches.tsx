@@ -2,6 +2,10 @@
 
 import React from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import type { Tab } from './ProductHeader'
 
@@ -13,12 +17,12 @@ const ROWS = {
 } as const
 
 const BatchTable = ({ tab }: { tab: Tab }) => (
-  <div className="w-full overflow-x-auto rounded-[24px] border border-border">
+  <div className="w-full overflow-x-auto rounded-lg border border-border">
     <table className="w-full border-collapse">
       <thead>
         <tr className="bg-surface">
           {['Batch', 'Start Date', 'Tests', 'Price', 'Actions'].map((h) => (
-            <th key={h} className="px-[15px] py-[11px] text-left text-[0.71rem] font-bold tracking-[0.06em] uppercase text-muted-2 border-b border-border">{h}</th>
+            <th key={h} className="px-[15px] py-[11px] text-left text-[0.71rem] font-bold tracking-[0.06em] uppercase text-subtle border-b border-border">{h}</th>
           ))}
         </tr>
       </thead>
@@ -49,18 +53,19 @@ const BatchTable = ({ tab }: { tab: Tab }) => (
 )
 
 export const Batches = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) => (
-  <section className="py-[clamp(44px,6.5vw,72px)]" id="batches">
+  <Section id="batches">
     <Container>
-      <div className="rv mb-8">
-        <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">Batches</span>
-        <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">Choose your batch and enrol.</h2>
-        <p className="text-muted text-[0.9rem] mt-2 max-w-[500px] leading-[1.6]">Both plans run on independent batch schedules. Later batches have fewer mocks as Prelims approaches.</p>
+      <div className="reveal mb-8">
+        <Eyebrow>Batches</Eyebrow>
+        <Heading as="h2" className="mt-2">Choose your batch and enrol.</Heading>
+        <Text variant="sm" muted className="mt-2 max-w-[500px]">Both plans run on independent batch schedules. Later batches have fewer mocks as Prelims approaches.</Text>
       </div>
 
-      <div className="rv flex gap-[9px] mb-[22px] flex-wrap">
+      <div className="reveal flex gap-[9px] mb-[22px] flex-wrap">
         {([['comp', 'Comprehensive — ₹2,999'], ['mock', 'Mock Only — ₹999']] as const).map(([t, label]) => (
           <button
             key={t}
+            type="button"
             onClick={() => setTab(t)}
             className={`px-4 py-[7px] rounded-full border-[1.5px] font-sans text-[0.82rem] font-semibold cursor-pointer transition-all duration-200 ${tab === t ? 'bg-violet text-white border-violet' : 'bg-white text-muted border-border'}`}
           >
@@ -71,7 +76,7 @@ export const Batches = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void })
 
       <BatchTable tab={tab} />
     </Container>
-  </section>
+  </Section>
 )
 
 export default Batches

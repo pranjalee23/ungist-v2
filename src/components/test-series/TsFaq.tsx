@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react'
 import { Container } from '@/components/ui/Container'
+import { Section } from '@/components/ui/Section'
+import { Eyebrow } from '@/components/ui/Eyebrow'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
 
 const FAQS = [
   { q: 'Are these tests online or offline?', a: 'Full-length mocks are available both online and offline. Sectional and topic tests are online only. For offline tests, visit our Old Rajender Nagar, New Delhi centre where the schedule is fixed.' },
@@ -14,28 +18,24 @@ const FAQS = [
 ]
 
 export const TsFaq = () => {
-  const [open, setOpen] = useState<Set<number>>(new Set([0]))
-  const toggle = (i: number) =>
-    setOpen((prev) => {
-      const next = new Set(prev)
-      next.has(i) ? next.delete(i) : next.add(i)
-      return next
-    })
+  const [open, setOpen] = useState<number | null>(0)
+  const toggle = (i: number) => setOpen((prev) => (prev === i ? null : i))
 
   return (
-    <section className="py-[clamp(44px,6.5vw,72px)]">
+    <Section id="ts-faq">
       <Container>
-        <div className="rv mb-8">
-          <span className="block text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-2">FAQs</span>
-          <h2 className="text-[clamp(1.4rem,2.6vw,1.85rem)] font-bold tracking-[-0.02em]">Common questions.</h2>
+        <div className="reveal mb-8">
+          <Eyebrow>FAQs</Eyebrow>
+          <Heading as="h2" className="mt-2">Common questions.</Heading>
         </div>
 
-        <div className="rv max-w-[660px]">
+        <div className="reveal max-w-[660px]">
           {FAQS.map((item, i) => {
-            const isOpen = open.has(i)
+            const isOpen = open === i
             return (
               <div key={item.q} className="border-b border-border">
                 <button
+                  type="button"
                   className="w-full bg-transparent border-none py-[15px] text-left font-sans text-[0.9rem] font-semibold text-ink cursor-pointer flex items-center justify-between gap-[13px]"
                   onClick={() => toggle(i)}
                 >
@@ -45,17 +45,17 @@ export const TsFaq = () => {
                   </span>
                 </button>
                 <div
-                  className="overflow-hidden transition-[max-height] duration-[400ms] [transition-timing-function:cubic-bezier(0.2,0.8,0.2,1)]"
+                  className="overflow-hidden transition-[max-height] duration-[400ms] [transition-timing-function:var(--ease-spring)]"
                   style={{ maxHeight: isOpen ? '200px' : '0' }}
                 >
-                  <p className="text-muted text-[0.84rem] leading-[1.65] pb-[15px]">{item.a}</p>
+                  <Text variant="xs" muted className="pb-[15px]">{item.a}</Text>
                 </div>
               </div>
             )
           })}
         </div>
       </Container>
-    </section>
+    </Section>
   )
 }
 

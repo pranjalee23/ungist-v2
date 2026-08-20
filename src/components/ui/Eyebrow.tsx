@@ -7,7 +7,7 @@ interface EyebrowProps {
 
 export const Eyebrow = ({ children, className = '' }: EyebrowProps) => (
   <span
-    className={`inline-flex items-center gap-[9px] text-[14px] font-bold tracking-[0.1em] uppercase text-violet ${className}`}
+    className={`inline-flex items-center gap-[9px] text-[14px] font-bold tracking-[0.1em] uppercase text-violet mb-4 ${className}`}
   >
     {children}
   </span>

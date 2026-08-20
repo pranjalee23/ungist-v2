@@ -3,13 +3,10 @@ import { Container } from '@/components/ui/Container'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { SectionHead } from '@/components/ui/SectionHead'
-
-const ArrowIco = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 transition-transform duration-[250ms] group-hover:translate-x-[3px]">
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-)
+import { Badge } from '@/components/ui/Badge'
+import { Heading } from '@/components/ui/Heading'
+import { Text } from '@/components/ui/Text'
+import { TextLink } from '@/components/ui/TextLink'
 
 const riColors: Record<string, { bg: string; text: string }> = {
   violet: { bg: '#F7F0FE', text: '#9a2ffb' },
@@ -43,24 +40,23 @@ const POSTS = [
 ]
 
 export const Resources = () => (
-  <Section surface id="resources">
+  <Section id="resources">
     <Container>
       <SectionHead center className="reveal">
         <Eyebrow>Free Resources</Eyebrow>
-        <h2 className="text-[36px] font-bold tracking-[-0.025em] mt-[18px]">Everything You Need to Prepare</h2>
-        <p className="text-muted text-[clamp(1.02rem,1.4vw,1.15rem)] mt-4 max-w-[560px] mx-auto">
+        <Heading as="h2" className="mt-[18px]">Everything You Need to Prepare</Heading>
+        <Text variant="body" muted className="text-[clamp(1.02rem,1.4vw,1.15rem)] mt-4 max-w-[560px] mx-auto">
           Access a rich library of free UPSC resources — curated, updated, and organised for serious aspirants.
-        </p>
+        </Text>
       </SectionHead>
 
       <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-1">
         {RESOURCES.map((r) => {
           const col = riColors[r.color] ?? riColors.violet
-          const statCol = riColors[r.color] ?? riColors.violet
           return (
             <article
               key={r.title}
-              className="reveal bg-white border border-border rounded-[24px] p-6 flex gap-4 transition-[box-shadow,border-color] duration-300 hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)] hover:border-[#E2D3F6]"
+              className="reveal bg-white border border-border rounded-lg p-6 flex gap-4 transition-[box-shadow,border-color] duration-300 hover:shadow-sm hover:border-white"
             >
               <span
                 className="w-[46px] h-[46px] rounded-[13px] grid place-items-center flex-none [&_svg]:w-[21px] [&_svg]:h-[21px]"
@@ -70,15 +66,15 @@ export const Resources = () => (
               </span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-[15px] font-bold">{r.title}</h3>
+                  <Heading as="h3" className="text-[15px]">{r.title}</Heading>
                   <span
                     className="text-[11px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap flex-none"
-                    style={{ background: statCol.bg, color: statCol.text }}
+                    style={{ background: col.bg, color: col.text }}
                   >
                     {r.stat}
                   </span>
                 </div>
-                <p className="text-muted text-[13px] mt-2 leading-[1.5]">{r.desc}</p>
+                <Text variant="xs" muted className="mt-2 leading-[1.5]">{r.desc}</Text>
               </div>
             </article>
           )
@@ -87,31 +83,27 @@ export const Resources = () => (
 
       {/* Blog preview */}
       <div className="reveal flex items-center justify-between gap-4 mt-14 mb-6">
-        <h3 className="text-[20px] font-bold">Latest from UNGIST Blog</h3>
-        <a href="/blog" className="group font-semibold text-[14px] text-violet inline-flex items-center gap-1.5 whitespace-nowrap">
-          View all posts
-          <ArrowIco />
-        </a>
+        <Heading as="h3" className="text-[20px]">Latest from UNGIST Blog</Heading>
+        <TextLink href="/blog" className="whitespace-nowrap">View all posts</TextLink>
       </div>
       <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-sm:grid-cols-1">
         {POSTS.map((p) => (
           <article
             key={p.title}
-            className="reveal bg-white border border-border rounded-[24px] p-6 transition-[box-shadow,border-color] duration-300 hover:shadow-[0_4px_20px_rgba(20,12,40,0.1)] hover:border-[#E2D3F6]"
+            className="reveal bg-white border border-border rounded-lg p-6 transition-[box-shadow,border-color] duration-300 hover:shadow-sm hover:border-white"
           >
             <div className="flex items-center gap-2.5">
-              <span className="text-[12px] font-bold bg-lavender text-violet px-[11px] py-[5px] rounded-full">{p.tag}</span>
-              <span className="text-[13px] text-muted">{p.read}</span>
+              <Badge>{p.tag}</Badge>
+              <Text variant="xs" muted>{p.read}</Text>
             </div>
-            <h4 className="text-[16px] font-bold mt-3.5 leading-[1.4]">{p.title}</h4>
-            <div className="text-[13px] text-muted mt-3">{p.date}</div>
+            <Heading as="h4" className="text-[16px] mt-3.5 leading-[1.4]">{p.title}</Heading>
+            <Text variant="xs" muted className="mt-3">{p.date}</Text>
           </article>
         ))}
       </div>
-      <a href="/blog" className="group hidden max-sm:flex justify-center items-center gap-1.5 mt-6 font-semibold text-[14px] text-violet">
-        View all posts
-        <ArrowIco />
-      </a>
+      <div className="hidden max-sm:flex justify-center mt-6">
+        <TextLink href="/blog">View all posts</TextLink>
+      </div>
     </Container>
   </Section>
 )

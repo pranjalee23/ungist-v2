@@ -1,25 +1,98 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;450;500;600;700&display=swap");
 @import "tailwindcss";
-@import "../styles/tokens.css";
 @import "../styles/base.css";
 
-/* Expose the design tokens to Tailwind utilities (bg-violet, text-ink,
-   rounded-xl, shadow-card, font-display, etc.) so future pages can build
-   from the same source of truth. */
+@theme {
+  /* ── Brand: violet ramp ── */
+  --color-violet: #9a2ffb;
+  --color-violet-soft: #b45cff;
+  --color-violet-700: #7c22d6;
+  --color-violet-deep: #5c18a8;
+
+  /* ── Neutrals (semantic) ── */
+  --color-ink: #212529;       /* primary text */
+  --color-secondary: #3a4047; /* secondary/body text — replaces bare #414750, #2c3138, #4a5057 */
+  --color-muted: #6c757d;     /* muted/placeholder text */
+  --color-subtle: #868e96;    /* subtle/supplementary text */
+  --color-disabled: #cbd2d9;  /* disabled icons, borders */
+  --color-surface: #f8f9fa;
+  --color-border: #e9ecef;
+
+  /* ── Lavender tints ── */
+  --color-lavender: #f7f0fe;
+  --color-lavender-2: #efe2fd;
+  --color-lavender-3: #e6d2fb;
+
+  /* ── Semantic accents ── */
+  --color-success: #22c55e;
+  --color-success-fg: #15803d;
+  --color-blue: #0284c7;
+  --color-blue-bg: #e0f2fe;
+  --color-amber: #f5a623;
+
+  /* ── Typography ── */
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-text: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Border radius (exact design tokens — never approximated) ── */
+  --radius-xs: 10px;   /* rounded-xs  — small inner elements */
+  --radius-sm: 12px;   /* rounded-sm  — buttons, chips */
+  --radius-md: 18px;   /* rounded-md  — modals, drawers */
+  --radius-lg: 24px;   /* rounded-lg  — large cards */
+  --radius-xl: 32px;   /* rounded-xl  — hero card, pricing cards */
+  --radius-card: 14px; /* rounded-card — inner card elements */
+
+  /* ── Shadows ── */
+  --shadow-1: 0 0 0 1px rgba(20, 12, 40, 0.06);
+  --shadow-2: 0 0 0 1px rgba(20, 12, 40, 0.07), 0 4px 12px rgba(20, 12, 40, 0.07);
+  --shadow-card: 0 4px 20px rgba(20, 12, 40, 0.1);
+  --shadow-overlay: 0 -16px 40px -16px rgba(20, 12, 40, 0.35);
+  --shadow-modal: 0 24px 60px -20px rgba(20, 12, 40, 0.35);
+  /* Elevation: sm = 2% black, md = 3% black; on hover: white border + elevation */
+  --shadow-sm: 4px 8px 24px 12px rgba(0, 0, 0, 0.02);
+  --shadow-md: 4px 8px 24px 12px rgba(0, 0, 0, 0.03);
+
+  /* ── Layout ── */
+  --container-site: 1280px;
+
+  /* ── Static colors (must be explicit so text-white/bg-white etc. resolve) ── */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* ── Animations ── */
+  --animate-dot-pulse: dotPulse 2s ease-in-out infinite;
+  --animate-campus-pulse: campusPulse 1.8s ease-out infinite;
+}
+
+/* Gradient & motion tokens — kept as :root vars (needed for bg-[--grad] & dynamic styles) */
+:root {
+  --grad: linear-gradient(135deg, #9a2ffb 0%, #7c22d6 55%, #5c18a8 100%);
+  --grad-soft: linear-gradient(135deg, #b45cff 0%, #9a2ffb 100%);
+  --nav-h: 64px;
+  --pad-section: clamp(76px, 10vw, 140px);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* ── Text selection ── */
+::selection {
+  background: rgba(154, 47, 251, 0.16);
+}
+
 /* ── Scroll-reveal (toggled by RevealOnScroll.tsx) ── */
-.reveal,
-.rv {
+.reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.reveal.in,
-.rv.in {
+.reveal.in {
   opacity: 1;
   transform: none;
 }
 
-/* ── Keyframes used by Campus and Hero badge ── */
+/* ── Keyframes ── */
 @keyframes campusPulse {
   0%   { transform: scale(1); opacity: 0.5; }
   100% { transform: scale(2.6); opacity: 0; }
@@ -27,32 +100,4 @@
 @keyframes dotPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
   50%       { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
-}
-
-@theme {
-  --color-violet: #9a2ffb;
-  --color-violet-soft: #b45cff;
-  --color-violet-700: #7c22d6;
-  --color-violet-deep: #5c18a8;
-  --color-ink: #212529;
-  --color-muted: #6c757d;
-  --color-muted-2: #868e96;
-  --color-surface: #f8f9fa;
-  --color-border: #e9ecef;
-  --color-lavender: #f7f0fe;
-  --color-lavender-2: #efe2fd;
-  --color-success: #22c55e;
-
-  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-text: "Inter", ui-sans-serif, system-ui, sans-serif;
-
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-
-  --shadow-card: 0 4px 20px rgba(20, 12, 40, 0.1);
-  --shadow-ring: 0 0 0 1px rgba(20, 12, 40, 0.07), 0 4px 12px rgba(20, 12, 40, 0.07);
-
-  --container-site: 1280px;
 }
