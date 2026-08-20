@@ -50,7 +50,7 @@ export const WhyDifferent = () => (
         {CARDS.map((c) => {
           const col = icoColors[c.color]
           return (
-            <div key={c.title} className="reveal flex gap-[15px] items-start bg-white border border-border rounded-lg p-5 shadow-sm transition-[box-shadow,border-color] duration-300 hover:shadow-md hover:border-white">
+            <div key={c.title} className="reveal flex gap-[15px] items-start bg-white border border-border rounded-lg p-5 shadow-sm transition-[box-shadow,border-color] duration-300 hover:shadow-sm hover:border-white">
               <span className="w-[38px] h-[38px] rounded-[10px] grid place-items-center flex-none [&_svg]:w-[17px] [&_svg]:h-[17px]" style={{ background: col.bg, color: col.text }}>
                 {c.icon}
               </span>
