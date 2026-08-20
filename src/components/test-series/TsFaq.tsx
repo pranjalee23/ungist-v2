@@ -24,12 +24,12 @@ export const TsFaq = () => {
   return (
     <Section id="ts-faq">
       <Container>
-        <div className="rv mb-8">
+        <div className="reveal mb-8">
           <Eyebrow>FAQs</Eyebrow>
           <Heading as="h2" className="mt-2">Common questions.</Heading>
         </div>
 
-        <div className="rv max-w-[660px]">
+        <div className="reveal max-w-[660px]">
           {FAQS.map((item, i) => {
             const isOpen = open === i
             return (

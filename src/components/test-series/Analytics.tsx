@@ -40,7 +40,7 @@ export const Analytics = () => (
     <Container>
       <div className="grid grid-cols-2 gap-[52px] items-center max-lg:grid-cols-1">
         {/* Left: copy + feature list */}
-        <div className="rv">
+        <div className="reveal">
           <div className="mb-8">
             <Eyebrow>Performance Analytics</Eyebrow>
             <Heading as="h2" className="mt-2">Know exactly what to fix after every test.</Heading>
@@ -62,7 +62,7 @@ export const Analytics = () => (
         </div>
 
         {/* Right: mock dashboard card */}
-        <div className="rv bg-white border border-border rounded-xl p-5 max-lg:hidden">
+        <div className="reveal bg-white border border-border rounded-xl p-5 max-lg:hidden">
           <div className="flex items-center justify-between mb-3.5">
             <Heading as="h4" className="text-[0.88rem]">Post-test Dashboard</Heading>
             <span className="text-[0.68rem] font-bold bg-lavender text-violet px-[9px] py-[3px] rounded-full">Full-Length Mock · Sample</span>

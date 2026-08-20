@@ -55,13 +55,13 @@ const BatchTable = ({ tab }: { tab: Tab }) => (
 export const Batches = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) => (
   <Section id="batches">
     <Container>
-      <div className="rv mb-8">
+      <div className="reveal mb-8">
         <Eyebrow>Batches</Eyebrow>
         <Heading as="h2" className="mt-2">Choose your batch and enrol.</Heading>
         <Text variant="sm" muted className="mt-2 max-w-[500px]">Both plans run on independent batch schedules. Later batches have fewer mocks as Prelims approaches.</Text>
       </div>
 
-      <div className="rv flex gap-[9px] mb-[22px] flex-wrap">
+      <div className="reveal flex gap-[9px] mb-[22px] flex-wrap">
         {([['comp', 'Comprehensive — ₹2,999'], ['mock', 'Mock Only — ₹999']] as const).map(([t, label]) => (
           <button
             key={t}

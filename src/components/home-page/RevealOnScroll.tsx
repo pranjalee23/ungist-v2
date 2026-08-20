@@ -2,14 +2,13 @@
 
 import { useEffect } from 'react'
 
-/** Marketing pages use `.reveal` (homepage) or `.rv` (test-series) for scroll reveals. */
-const SELECTOR = '.reveal, .rv'
-const isReveal = (el: HTMLElement) => el.classList.contains('reveal') || el.classList.contains('rv')
+const SELECTOR = '.reveal'
+const isReveal = (el: HTMLElement) => el.classList.contains('reveal')
 
 /**
  * Ports the marketing pages' reveal-on-scroll behaviour: every reveal element
  * fades/slides in when it enters the viewport. Mounted once in the frontend
- * layout. Without this, `.reveal`/`.rv` ({ opacity: 0 }) would stay hidden.
+ * layout. Without this, `.reveal` ({ opacity: 0 }) would stay hidden.
  */
 export const RevealOnScroll = () => {
   useEffect(() => {

@@ -7,7 +7,7 @@ import { Text } from '@/components/ui/Text'
 export const CrossSell = () => (
   <Section surface id="cross-sell">
     <Container>
-      <div className="rv bg-surface rounded-lg px-6 py-5 flex items-center justify-between gap-5 flex-wrap">
+      <div className="reveal bg-surface rounded-lg px-6 py-5 flex items-center justify-between gap-5 flex-wrap">
         <Text variant="sm" muted>
           <strong className="text-ink">Want more than just tests?</strong> The CSAT Foundation Course includes live
           classes, structured notes, doubt support — and this test series — all in one.

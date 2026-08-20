@@ -15,12 +15,12 @@ const STEPS = [
 export const HowItWorks = () => (
   <Section surface id="how-it-works">
     <Container>
-      <div className="rv max-w-[520px] mx-auto text-center mb-8">
+      <div className="reveal max-w-[520px] mx-auto text-center mb-8">
         <Eyebrow>How It Works</Eyebrow>
         <Heading as="h2" className="mt-2">From test to insight in one session.</Heading>
       </div>
 
-      <div className="rv relative grid grid-cols-4 gap-5 max-lg:grid-cols-2 max-[480px]:grid-cols-1">
+      <div className="reveal relative grid grid-cols-4 gap-5 max-lg:grid-cols-2 max-[480px]:grid-cols-1">
         {/* Connector line */}
         <div className="absolute top-5 left-[calc(12.5%+6px)] right-[calc(12.5%+6px)] h-px bg-[linear-gradient(90deg,var(--color-lavender-2),#B45CFF,var(--color-lavender-2))] z-0 max-lg:hidden" />
 
@@ -35,7 +35,7 @@ export const HowItWorks = () => (
         ))}
       </div>
 
-      <div className="rv mt-[22px] flex items-start gap-[9px] bg-surface rounded-sm px-[15px] py-3 border-l-[3px] border-violet [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-violet [&_svg]:flex-none [&_svg]:mt-0.5">
+      <div className="reveal mt-[22px] flex items-start gap-[9px] bg-surface rounded-sm px-[15px] py-3 border-l-[3px] border-violet [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-violet [&_svg]:flex-none [&_svg]:mt-0.5">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>

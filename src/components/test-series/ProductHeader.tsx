@@ -133,7 +133,7 @@ export const ProductHeader = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => v
       <Container>
         <div className="grid grid-cols-[1fr_336px] gap-12 items-start max-lg:grid-cols-1">
           {/* Left */}
-          <div className="rv">
+          <div className="reveal">
             <div className="inline-flex items-center gap-1.5 text-[11.5px] font-bold tracking-[0.1em] uppercase text-violet mb-[10px] [&_svg]:w-[11px] [&_svg]:h-[11px]">
               <ClockIco />
               CSAT · Prelims Paper II
@@ -158,7 +158,7 @@ export const ProductHeader = ({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => v
           </div>
 
           {/* Purchase card */}
-          <div className="rv bg-white border-[1.5px] border-border rounded-xl p-5 shadow-2 sticky top-20">
+          <div className="reveal bg-white border-[1.5px] border-border rounded-xl p-5 shadow-2 sticky top-20">
             {/* Tab switcher */}
             <div className="flex bg-surface rounded-sm p-[3px] mb-4">
               {(['comp', 'mock'] as const).map((t) => (

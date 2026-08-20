@@ -42,7 +42,7 @@ const CARDS = [
 export const WhyDifferent = () => (
   <Section surface id="why-different">
     <Container>
-      <div className="rv mb-8">
+      <div className="reveal mb-8">
         <Eyebrow>Why UNGIST</Eyebrow>
         <Heading as="h2" className="mt-2">Built differently from every other CSAT series.</Heading>
       </div>
@@ -50,7 +50,7 @@ export const WhyDifferent = () => (
         {CARDS.map((c) => {
           const col = icoColors[c.color]
           return (
-            <div key={c.title} className="rv flex gap-[15px] items-start bg-white border border-border rounded-lg p-5 shadow-sm transition-[box-shadow] duration-300 hover:shadow-card">
+            <div key={c.title} className="reveal flex gap-[15px] items-start bg-white border border-border rounded-lg p-5 shadow-sm transition-[box-shadow,border-color] duration-300 hover:shadow-md hover:border-white">
               <span className="w-[38px] h-[38px] rounded-[10px] grid place-items-center flex-none [&_svg]:w-[17px] [&_svg]:h-[17px]" style={{ background: col.bg, color: col.text }}>
                 {c.icon}
               </span>

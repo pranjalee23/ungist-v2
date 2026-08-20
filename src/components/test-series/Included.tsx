@@ -41,12 +41,12 @@ const CARDS = [
 export const Included = () => (
   <Section id="included">
     <Container>
-      <div className="rv mb-8">
+      <div className="reveal mb-8">
         <Eyebrow>What&apos;s Included</Eyebrow>
         <Heading as="h2" className="mt-2">Three types of tests. One clear goal.</Heading>
         <Text variant="sm" muted className="mt-2 max-w-[500px]">Comprehensive gives you all three. Mock Only gives you full-length mocks with video solutions.</Text>
       </div>
-      <div className="rv grid grid-cols-3 gap-px bg-border rounded-lg overflow-hidden max-[768px]:grid-cols-1">
+      <div className="reveal grid grid-cols-3 gap-px bg-border rounded-lg overflow-hidden max-[768px]:grid-cols-1">
         {CARDS.map((c) => {
           const col = icoColors[c.color]
           return (

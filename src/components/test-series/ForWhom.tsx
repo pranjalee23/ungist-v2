@@ -27,12 +27,12 @@ const CARDS = [
 export const ForWhom = () => (
   <Section surface id="for-whom">
     <Container>
-      <div className="rv mb-8">
+      <div className="reveal mb-8">
         <Eyebrow>Who Is This For</Eyebrow>
         <Heading as="h2" className="mt-2">This test series is right for you if…</Heading>
       </div>
 
-      <div className="rv grid grid-cols-3 gap-3 max-[768px]:grid-cols-1">
+      <div className="reveal grid grid-cols-3 gap-3 max-[768px]:grid-cols-1">
         {CARDS.map((c) => (
           <div key={c.title} className="flex gap-3 items-start bg-white border border-border rounded-md p-[15px]">
             <div className="w-8 h-8 rounded-[8px] bg-lavender-2 grid place-items-center flex-none">
@@ -46,7 +46,7 @@ export const ForWhom = () => (
         ))}
       </div>
 
-      <div className="rv mt-4 flex items-start gap-[9px] bg-[#F0FDF4] rounded-sm px-[15px] py-3 border-l-[3px] border-success [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-success [&_svg]:flex-none [&_svg]:mt-0.5">
+      <div className="reveal mt-4 flex items-start gap-[9px] bg-[#F0FDF4] rounded-sm px-[15px] py-3 border-l-[3px] border-success [&_svg]:w-3.5 [&_svg]:h-3.5 [&_svg]:text-success [&_svg]:flex-none [&_svg]:mt-0.5">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
           <polyline points="22 4 12 14.01 9 11.01" />
